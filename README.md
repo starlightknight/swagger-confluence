@@ -18,16 +18,17 @@ Your Swagger Schema -> Swagger2Markup -> AsciiDoctorJ -> XHTML -> Confluence RES
 
 This project requires the use of Java 7 or later.
 
+## Documentation & Usage
+
+You can view the documentation and usage guide [here](https://cloud.slkdev.net/swagger-confluence)
+
 ## Contributing
 
 ### Community contributions
 
 
-Pull requests are welcome. Please submit via my GitLab instance:
+Pull requests are welcome. Please submit via my [GitLab Instance](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence)
 
-
-
-https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence
 
 
 
@@ -35,11 +36,7 @@ https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence
 
 
 
-If you have any questions about the project, please feel free to open an issue:
-
-
-
-https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence/issues
+If you have any questions about the project, please feel free to open an [issue](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence/issues)
 
 
 
@@ -57,17 +54,17 @@ If you would like an enhancement to be made to the Swagger Confluence, pull requ
 A special thanks for the following projects, who make this project possible:
 
 
-* Swagger2Markup: https://github.com/Swagger2Markup/swagger2markup
-* AsciiDoctorJ: https://github.com/asciidoctor/asciidoctorj
-* Confluence REST API: https://developer.atlassian.com/confdev/confluence-rest-api
+* [Swagger2Markup](https://github.com/Swagger2Markup/swagger2markup)
+* [AsciiDoctorJ](https://github.com/asciidoctor/asciidoctorj)
+* [Confluence REST API](https://developer.atlassian.com/confdev/confluence-rest-api)
 
 
 
 Additional shout-outs to the following two projects - whom I tried using manually in
 conjunction with the above projects and their respective gradle plugins before starting this project:
 
-* asciidoctor-confluence: https://github.com/gscheibel/asciidoctor-confluence
-* asciidoc2confluence: https://github.com/rdmueller/asciidoc2confluence
+* [asciidoctor-confluence](https://github.com/gscheibel/asciidoctor-confluence)
+* [asciidoc2confluence](https://github.com/rdmueller/asciidoc2confluence)
 
 The XHTML->Confluence REST API portion of this library was inspired by the
 asciidoc2confluence groovy script
