@@ -24,6 +24,15 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.destination "${buildDir}/jacocoHtml"
+        }
+        additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    }
 
     repositories {
         mavenLocal()
@@ -40,6 +49,9 @@ subprojects {
     }
 
     test {
+        jacoco {
+            enabled true
+        }
         reports {
             html.enabled = true
             junitXml.enabled = true

@@ -9,6 +9,8 @@ stages:
   - publish
 
 cache:
+  group: swagger_confluence
+  key: "$CI_BUILD_REF_NAME"
   paths:
      - .gradle/wrapper
      - .gradle/caches
@@ -34,7 +36,7 @@ job_build_master:
 job_analyze_develop:
   stage: analyze
   script:
-    - ./gradlew sonarqube
+    - ./gradlew jacocoTestReport sonarqube
   only:
     - develop
   tags:
