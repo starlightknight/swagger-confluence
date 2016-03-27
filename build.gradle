@@ -1,0 +1,81 @@
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+}
+
+subprojects {
+    group 'net.slkdev.swagger.confluence'
+    version '1.0-SNAPSHOT'
+
+    buildscript {
+        repositories {
+            jcenter()
+            mavenCentral()
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'sonar'
+    apply plugin: 'maven-publish'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = 2.12
+    }
+
+    test {
+        reports {
+            html.enabled = true
+            junitXml.enabled = true
+        }
+    }
+
+    publishing {
+        def mavenReleaseUrl = "$System.env.MAVEN_PUBLISH_RELEASE_URL"
+        def mavenSnapshotUrl = "$System.env.MAVEN_PUBLISH_SNAPSHOT_URL"
+        def mavenUser = "$System.env.MAVEN_PUBLISH_USER"
+        def mavenPass = "$System.env.MAVEN_PUBLISH_PASS"
+
+        repositories {
+            maven {
+                if (mavenReleaseUrl || mavenSnapshotUrl) {
+                    if (mavenSnapshotUrl && project.version.endsWith('-SNAPSHOT')) {
+                        url mavenSnapshotUrl
+                    }
+                    else {
+                        url mavenReleaseUrl
+                    }
+                    credentials {
+                        username mavenUser
+                        password mavenPass
+                    }
+                }
+                else {
+                    url "${System.properties.'user.home'}/.m2/repository"
+                }
+            }
+        }
+    }
+
+    sonar {
+        server {
+            url = "https://cloud.slkdev.net/sonar"
+        }
+        database {
+            url = "jdbc:mysql://localhost/sonar"
+            driverClassName = "com.mysql.jdbc.Driver"
+            username = "$System.env.SONAR_USER"
+            password = "$System.env.SONAR_PASSWORD"
+        }
+    }
+
+}

@@ -1,0 +1,14 @@
+evaluationDependsOn(':swagger-confluence-core')
+
+dependencies {
+    compile (project(':swagger-confluence-core'))
+    compile gradleApi()
+}
+
+publishing {
+	publications {
+		myPublication(MavenPublication) {
+			from components.java
+		}
+	}
+}

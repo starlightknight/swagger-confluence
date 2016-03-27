@@ -1,0 +1,3 @@
+rootProject.name = 'swagger-confluence'
+include 'swagger-confluence-core', 'swagger-confluence-gradle-plugin'
+
