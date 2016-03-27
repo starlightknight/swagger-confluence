@@ -6,6 +6,33 @@ dependencies {
 }
 
 publishing {
+    def mavenReleaseUrl = "$System.env.MAVEN_PUBLISH_PLUGIN_RELEASE_URL"
+    def mavenSnapshotUrl = "$System.env.MAVEN_PUBLISH_PLUGIN_SNAPSHOT_URL"
+    def mavenUser = "$System.env.MAVEN_PUBLISH_USER"
+    def mavenPass = "$System.env.MAVEN_PUBLISH_PASS"
+
+    repositories {
+        maven {
+            if (mavenReleaseUrl || mavenSnapshotUrl) {
+                if (mavenSnapshotUrl && project.version.endsWith('-SNAPSHOT')) {
+                    url mavenSnapshotUrl
+                }
+                else {
+                    url mavenReleaseUrl
+                }
+                credentials {
+                    username mavenUser
+                    password mavenPass
+                }
+            }
+            else {
+                url "${System.properties.'user.home'}/.m2/repository"
+            }
+        }
+    }
+}
+
+publishing {
 	publications {
 		myPublication(MavenPublication) {
 			from components.java

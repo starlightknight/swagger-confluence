@@ -1,0 +1,27 @@
+image: java:8-jdk
+
+stages:
+  - build
+  - publish
+
+job_build:
+  stage: build
+  script:
+    - ./gradlew clean build
+  artifacts:
+    paths:
+    - swagger-confluence-core/build/libs/*.jar
+    - swagger-confluence-gradle-plugin/build/libs/*.jar
+  only:
+    - develop
+  tags:
+    - java
+    - docker
+
+job_publish:
+  stage: publish
+  only:
+    - develop
+  script:
+    - ./gradlew publish
+
