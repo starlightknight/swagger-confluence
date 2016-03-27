@@ -1,27 +1,56 @@
 image: java:8-jdk
 
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
 stages:
   - build
+  - analyze
   - publish
 
-job_build:
+cache:
+  paths:
+     - .gradle/wrapper
+     - .gradle/caches
+
+job_build_develop:
   stage: build
   script:
     - ./gradlew clean build
-  artifacts:
-    paths:
-    - swagger-confluence-core/build/libs/*.jar
-    - swagger-confluence-gradle-plugin/build/libs/*.jar
   only:
     - develop
   tags:
-    - java
+    - docker
+
+job_build_master:
+  stage: build
+  script:
+    - ./gradlew clean build -Prelease=true
+  only:
+    - master
+  tags:
+    - docker
+
+job_analyze_develop:
+  stage: analyze
+  script:
+    - ./gradlew sonarqube
+  only:
+    - develop
+  tags:
     - docker
 
 job_publish:
   stage: publish
   only:
     - develop
+    - master
   script:
     - ./gradlew publish
+  artifacts:
+    paths:
+    - swagger-confluence-core/build/libs/*.jar
+    - swagger-confluence-gradle-plugin/build/libs/*.jar
+  tags:
+    - docker
 

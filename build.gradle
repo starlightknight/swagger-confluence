@@ -5,7 +5,15 @@ allprojects {
 
 subprojects {
     group 'net.slkdev.swagger.confluence'
-    version '1.0-SNAPSHOT'
+
+    version '1.0'
+
+    if (project.hasProperty("release")) {
+        version += '-RELEASE'
+    }
+    else {
+        version += '-SNAPSHOT'
+    }
 
     buildscript {
         repositories {
@@ -47,11 +55,11 @@ subprojects {
         repositories {
             maven {
                 if (mavenReleaseUrl || mavenSnapshotUrl) {
-                    if (mavenSnapshotUrl && project.version.endsWith('-SNAPSHOT')) {
-                        url mavenSnapshotUrl
+                    if (mavenReleaseUrl && project.version.endsWith('-RELEASE')) {
+                        url mavenReleaseUrl
                     }
                     else {
-                        url mavenReleaseUrl
+                        url mavenSnapshotUrl
                     }
                     credentials {
                         username mavenUser
@@ -64,5 +72,4 @@ subprojects {
             }
         }
     }
-
 }
