@@ -42,11 +42,10 @@ job_analyze_develop:
   tags:
     - docker
 
-job_publish:
+job_publish_develop:
   stage: publish
   only:
     - develop
-    - master
   script:
     - ./gradlew publish
   artifacts:
@@ -56,3 +55,15 @@ job_publish:
   tags:
     - docker
 
+job_publish_master:
+  stage: publish
+  only:
+    - master
+  script:
+    - ./gradlew publish -Prelease=true
+  artifacts:
+    paths:
+    - swagger-confluence-core/build/libs/*.jar
+    - swagger-confluence-gradle-plugin/build/libs/*.jar
+  tags:
+    - docker
