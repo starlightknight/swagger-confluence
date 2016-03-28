@@ -17,12 +17,21 @@ package net.slkdev.swagger.confluence.config;
 
 public class SwaggerConfluenceConfig {
 
+	private Integer ancestorId;
 	private String authentication;
 	private String confluenceRestApiUrl;
 	private String prefix;
 	private String spaceKey;
 	private String swaggerSchema;
 	private String title;
+
+	public Integer getAncestorId() {
+		return ancestorId;
+	}
+
+	public void setAncestorId(Integer ancestorId) {
+		this.ancestorId = ancestorId;
+	}
 
 	public String getAuthentication() {
 		return authentication;

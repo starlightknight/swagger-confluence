@@ -17,6 +17,7 @@ package net.slkdev.swagger.confluence.service.impl;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.slkdev.swagger.confluence.config.SwaggerConfluenceConfig;
 import net.slkdev.swagger.confluence.model.ConfluencePage;
@@ -114,6 +115,19 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		jsonObject.put("title", swaggerConfluenceConfig.getPrefix()+ swaggerConfluenceConfig.getTitle());
 		jsonObject.put("space",jsonSpaceObject);
 		jsonObject.put("body",jsonBodyObject);
+
+		final Integer ancestorId = swaggerConfluenceConfig.getAncestorId();
+
+		if(ancestorId!=null){
+			final JSONObject ancestor = new JSONObject();
+			ancestor.put("type","page");
+			ancestor.put("id", ancestorId);
+
+			final JSONArray ancestors = new JSONArray();
+			ancestors.add(ancestor);
+
+			jsonObject.put("ancestors", ancestors);
+		}
 
 		return jsonObject;
 	}
