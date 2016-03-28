@@ -17,6 +17,7 @@ subprojects {
 
     buildscript {
         repositories {
+            mavenLocal()
             jcenter()
             mavenCentral()
         }
@@ -66,12 +67,12 @@ subprojects {
 
         repositories {
             maven {
-                if (mavenReleaseUrl || mavenSnapshotUrl) {
-                    if (mavenReleaseUrl && project.version.endsWith('-RELEASE')) {
-                        url mavenReleaseUrl
+                if (mavenReleaseUrl != "null" || mavenSnapshotUrl != "null") {
+                    if (mavenSnapshotUrl != "null" && project.version.endsWith('-SNAPSHOT')) {
+                        url mavenSnapshotUrl
                     }
                     else {
-                        url mavenSnapshotUrl
+                        url mavenReleaseUrl
                     }
                     credentials {
                         username mavenUser

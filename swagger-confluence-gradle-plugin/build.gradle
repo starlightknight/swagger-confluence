@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -37,8 +38,8 @@ publishing {
 
     repositories {
         maven {
-            if (mavenReleaseUrl || mavenSnapshotUrl) {
-                if (mavenSnapshotUrl && project.version.endsWith('-SNAPSHOT')) {
+            if (mavenReleaseUrl != "null" || mavenSnapshotUrl != "null") {
+                if (mavenSnapshotUrl != "null" && project.version.endsWith('-SNAPSHOT')) {
                     url mavenSnapshotUrl
                 }
                 else {
