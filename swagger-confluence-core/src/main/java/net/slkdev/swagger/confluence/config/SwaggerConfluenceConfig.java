@@ -15,15 +15,22 @@
  */
 package net.slkdev.swagger.confluence.config;
 
+import net.slkdev.swagger.confluence.constants.PaginationMode;
+
 public class SwaggerConfluenceConfig {
 
 	private Integer ancestorId;
 	private String authentication;
 	private String confluenceRestApiUrl;
+	private PaginationMode paginationMode;
 	private String prefix;
 	private String spaceKey;
 	private String swaggerSchema;
 	private String title;
+
+	public SwaggerConfluenceConfig(){
+		paginationMode = PaginationMode.SINGLE_PAGE;
+	}
 
 	public Integer getAncestorId() {
 		return ancestorId;
@@ -47,6 +54,32 @@ public class SwaggerConfluenceConfig {
 
 	public void setConfluenceRestApiUrl(final String confluenceRestApiUrl) {
 		this.confluenceRestApiUrl = confluenceRestApiUrl;
+	}
+
+	public PaginationMode getPaginationMode() {
+		return paginationMode;
+	}
+
+	public void setPaginationMode(PaginationMode paginationMode) {
+		this.paginationMode = paginationMode;
+	}
+
+	public void setPaginationMode(String paginationMode) {
+		switch(paginationMode){
+			case "single":
+				this.paginationMode = PaginationMode.SINGLE_PAGE;
+				break;
+			case "category":
+				this.paginationMode = PaginationMode.CATEGORY_PAGES;
+				break;
+			case "individual":
+				this.paginationMode = PaginationMode.INDIVIDUAL_PAGES;
+				break;
+			default:
+				throw new RuntimeException(
+						String.format("Invalid Pagination Mode <%s>", paginationMode)
+				);
+		}
 	}
 
 	public String getPrefix() {

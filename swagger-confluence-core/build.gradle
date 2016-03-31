@@ -52,6 +52,7 @@ dependencies {
     compile "org.springframework:spring-web:$SPRING_VERSION"
     compile "org.asciidoctor:asciidoctorj:$ASCIIDOCTORJ_VERSION"
     compile "com.jayway.jsonpath:json-path:$JSONPATH_VERSION"
+    compile "org.jsoup:jsoup:$JSOUP_VERSION"
 
     compile "org.apache.logging.log4j:log4j-core:$LOG4J2_VERSION"
     compile "org.apache.logging.log4j:log4j-slf4j-impl:$LOG4J2_VERSION"

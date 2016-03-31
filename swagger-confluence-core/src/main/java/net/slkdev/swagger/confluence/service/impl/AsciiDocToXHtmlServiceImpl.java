@@ -19,6 +19,7 @@ import net.slkdev.swagger.confluence.service.AsciiDocToXHtmlService;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.AttributesBuilder;
 import org.asciidoctor.OptionsBuilder;
+import org.asciidoctor.Placement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,7 @@ public class AsciiDocToXHtmlServiceImpl implements AsciiDocToXHtmlService {
 
 		final Map<String, Object> attributes = AttributesBuilder.attributes()
 				.unsetStyleSheet()
+				.tableOfContents(Placement.TOP)
 				.asMap();
 
 		final Map<String, Object> options = OptionsBuilder.options()

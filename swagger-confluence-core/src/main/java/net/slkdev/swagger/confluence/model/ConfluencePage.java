@@ -15,17 +15,31 @@
  */
 package net.slkdev.swagger.confluence.model;
 
+import net.slkdev.swagger.confluence.constants.PageType;
+
 public class ConfluencePage {
 
-	private boolean exists;
+	private Integer ancestorId;
+	private Boolean exists;
 	private String id;
+	private PageType pageType;
+	private String title;
 	private Integer version;
+	private String xhtml;
+
+	public Integer getAncestorId() {
+		return ancestorId;
+	}
+
+	public void setAncestorId(Integer ancestorId) {
+		this.ancestorId = ancestorId;
+	}
 
 	public boolean exists() {
 		return exists;
 	}
 
-	public void setExists(boolean exists) {
+	public void setExists(Boolean exists) {
 		this.exists = exists;
 	}
 
@@ -37,12 +51,36 @@ public class ConfluencePage {
 		this.id = id;
 	}
 
+	public PageType getPageType() {
+		return pageType;
+	}
+
+	public void setPageType(PageType pageType) {
+		this.pageType = pageType;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public String getXhtml() {
+		return xhtml;
+	}
+
+	public void setXhtml(String xhtml) {
+		this.xhtml = xhtml;
 	}
 
 }

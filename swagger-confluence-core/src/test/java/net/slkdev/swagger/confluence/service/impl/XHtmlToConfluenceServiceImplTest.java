@@ -16,6 +16,7 @@
 package net.slkdev.swagger.confluence.service.impl;
 
 import net.slkdev.swagger.confluence.config.SwaggerConfluenceConfig;
+import net.slkdev.swagger.confluence.constants.PaginationMode;
 import net.slkdev.swagger.confluence.service.XHtmlToConfluenceService;
 import org.apache.commons.codec.binary.Base64;
 import org.asciidoctor.internal.IOUtils;
@@ -39,6 +40,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class XHtmlToConfluenceServiceImplTest {
@@ -48,6 +50,8 @@ public class XHtmlToConfluenceServiceImplTest {
 			"\":\"\",\"representation\":\"storage\"}}}]}";
 
 	private static final String GET_RESPONSE_NOT_FOUND = "{\"results\":[]}";
+
+	private static final String POST_RESPONSE = "{\"id\":\"1\"}";
 
 	@Mock
 	private RestTemplate restTemplate;
@@ -63,7 +67,7 @@ public class XHtmlToConfluenceServiceImplTest {
 	}
 
 	@Test
-	public void testCreatePage(){
+	public void testCreatePageWithPaginationModeSingle(){
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = getTestSwaggerConfluenceConfig();
 
 		final String xhtml = IOUtils.readFull(
@@ -74,6 +78,9 @@ public class XHtmlToConfluenceServiceImplTest {
 		when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
 				any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
 		when(responseEntity.getBody()).thenReturn(GET_RESPONSE_NOT_FOUND);
+		when(restTemplate.exchange(any(URI.class), eq(HttpMethod.POST),
+				any(HttpEntity.class), eq(String.class))).thenReturn(responseEntity);
+		when(responseEntity.getBody()).thenReturn(POST_RESPONSE);
 
 		final ArgumentCaptor<HttpEntity> httpEntityCaptor = ArgumentCaptor.forClass(HttpEntity.class);
 
@@ -96,7 +103,7 @@ public class XHtmlToConfluenceServiceImplTest {
 	}
 
 	@Test
-	public void testUpdatePage(){
+	public void testUpdatePageWithPaginationModeSingle(){
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = getTestSwaggerConfluenceConfig();
 
 		final String xhtml = IOUtils.readFull(
@@ -128,6 +135,85 @@ public class XHtmlToConfluenceServiceImplTest {
 		assertEquals("Unexpected JSON Post Body", expectedPostBody, capturedHttpEntity.getBody());
 	}
 
+	@Test
+	public void testCreatePageWithPaginationModeCategory(){
+		final SwaggerConfluenceConfig swaggerConfluenceConfig = getTestSwaggerConfluenceConfig();
+		swaggerConfluenceConfig.setPaginationMode(PaginationMode.CATEGORY_PAGES);
+
+		final String xhtml = IOUtils.readFull(
+				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
+						"/swagger-petstore-xhtml-example.html")
+		);
+
+		for(int i = 0; i < 4; i++) {
+			when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
+					any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
+			when(responseEntity.getBody()).thenReturn(GET_RESPONSE_NOT_FOUND);
+			when(restTemplate.exchange(any(URI.class), eq(HttpMethod.POST),
+					any(HttpEntity.class), eq(String.class))).thenReturn(responseEntity);
+			when(responseEntity.getBody()).thenReturn(POST_RESPONSE);
+		}
+
+		final ArgumentCaptor<HttpEntity> httpEntityCaptor = ArgumentCaptor.forClass(HttpEntity.class);
+
+		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
+
+		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.GET),
+				any(RequestEntity.class), eq(String.class));
+		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.POST),
+				httpEntityCaptor.capture(), eq(String.class));
+
+		final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+
+		final String expectedPostBody = IOUtils.readFull(
+				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
+						"/swagger-confluence-create-json-body-definitions-example.json")
+		);
+
+		assertNotNull("Failed to Capture RequeestEntity for POST", capturedHttpEntity);
+		// We'll do a full check on the last page versus a resource; not doing all of them as it
+		// would be a pain to maintain, but this should give us a nod of confidence.
+		assertEquals("Unexpected JSON Post Body", expectedPostBody, capturedHttpEntity.getBody());
+	}
+
+	@Test
+	public void testUpdatePageWithPaginationModeCategory(){
+		final SwaggerConfluenceConfig swaggerConfluenceConfig = getTestSwaggerConfluenceConfig();
+		swaggerConfluenceConfig.setPaginationMode(PaginationMode.CATEGORY_PAGES);
+
+		final String xhtml = IOUtils.readFull(
+				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
+						"/swagger-petstore-xhtml-example.html")
+		);
+
+		for(int i = 0; i < 4; i++) {
+			when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
+					any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
+			when(responseEntity.getBody()).thenReturn(GET_RESPONSE_FOUND);
+		}
+
+		final ArgumentCaptor<HttpEntity> httpEntityCaptor = ArgumentCaptor.forClass(HttpEntity.class);
+
+		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
+
+		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.GET),
+				any(RequestEntity.class), eq(String.class));
+		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.PUT),
+				httpEntityCaptor.capture(), eq(String.class));
+
+		final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+
+		final String expectedPostBody = IOUtils.readFull(
+				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
+						"/swagger-confluence-update-json-body-definitions-example.json")
+		);
+
+		assertNotNull("Failed to Capture RequeestEntity for POST", capturedHttpEntity);
+		// We'll do a full check on the last page versus a resource; not doing all of them as it
+		// would be a pain to maintain, but this should give us a nod of confidence.
+		assertEquals("Unexpected JSON Post Body", expectedPostBody, capturedHttpEntity.getBody());
+	}
+
 	private SwaggerConfluenceConfig getTestSwaggerConfluenceConfig(){
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = new SwaggerConfluenceConfig();
 
@@ -146,4 +232,5 @@ public class XHtmlToConfluenceServiceImplTest {
 		final byte[] base64CredsBytes = Base64.encodeBase64(plainCredsBytes);
 		return new String(base64CredsBytes);
 	}
+
 }

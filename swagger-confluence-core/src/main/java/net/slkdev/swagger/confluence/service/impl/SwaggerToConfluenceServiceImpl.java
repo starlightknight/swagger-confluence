@@ -16,6 +16,7 @@
 package net.slkdev.swagger.confluence.service.impl;
 
 import net.slkdev.swagger.confluence.config.SwaggerConfluenceConfig;
+import net.slkdev.swagger.confluence.constants.PaginationMode;
 import net.slkdev.swagger.confluence.service.AsciiDocToXHtmlService;
 import net.slkdev.swagger.confluence.service.SwaggerToAsciiDocService;
 import net.slkdev.swagger.confluence.service.SwaggerToConfluenceService;
@@ -46,6 +47,7 @@ public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceServic
 		final String confluenceRestApiUrl = swaggerConfluenceConfig.getConfluenceRestApiUrl();
 		final String spaceKey = swaggerConfluenceConfig.getSpaceKey();
 		final String prefix = swaggerConfluenceConfig.getPrefix();
+		final PaginationMode paginationMode = swaggerConfluenceConfig.getPaginationMode();
 
 		notNull("Swagger Schema Cannot Be Null!", swaggerSchema);
 		notNull("Confluence REST API URL Cannot Be Null!", confluenceRestApiUrl);
@@ -56,6 +58,7 @@ public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceServic
 		LOG.info("Swagger Schema: {}", swaggerSchema);
 		LOG.info("Confluence REST API URL: {}", confluenceRestApiUrl);
 		LOG.info("Confluence Space Key: {}", spaceKey);
+		LOG.info("Confluence PaginationMode: {}", paginationMode);
 
 		if(prefix == null){
 			LOG.info("Confluence Title Prefix: No Prefix Supplied");
@@ -64,8 +67,7 @@ public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceServic
 			LOG.info("Confluence Title Prefix: {}", prefix);
 		}
 
-		final String asciiDoc = swaggerToAsciiDocService.convertSwaggerToAsciiDoc(
-				swaggerConfluenceConfig.getSwaggerSchema());
+		final String asciiDoc = swaggerToAsciiDocService.convertSwaggerToAsciiDoc(swaggerSchema);
 		final String xhtml = asciiDocToXHtmlService.convertAsciiDocToXHtml(asciiDoc);
 		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 	}
