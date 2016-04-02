@@ -87,7 +87,12 @@ public class SwaggerConfluenceConfig {
 	}
 
 	public void setPrefix(final String prefix) {
-		this.prefix = prefix;
+		if(prefix.endsWith(" ")){
+			this.prefix = prefix;
+		}
+		else {
+			this.prefix = prefix + ' ';
+		}
 	}
 
 	public String getSpaceKey() {
