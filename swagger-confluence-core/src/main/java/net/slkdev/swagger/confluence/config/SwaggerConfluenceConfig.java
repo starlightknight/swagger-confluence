@@ -22,6 +22,7 @@ public class SwaggerConfluenceConfig {
 	private Integer ancestorId;
 	private String authentication;
 	private String confluenceRestApiUrl;
+	private boolean generateNumericPrefixes;
 	private PaginationMode paginationMode;
 	private String prefix;
 	private String spaceKey;
@@ -29,6 +30,7 @@ public class SwaggerConfluenceConfig {
 	private String title;
 
 	public SwaggerConfluenceConfig(){
+		generateNumericPrefixes = true;
 		paginationMode = PaginationMode.SINGLE_PAGE;
 	}
 
@@ -54,6 +56,14 @@ public class SwaggerConfluenceConfig {
 
 	public void setConfluenceRestApiUrl(final String confluenceRestApiUrl) {
 		this.confluenceRestApiUrl = confluenceRestApiUrl;
+	}
+
+	public boolean isGenerateNumericPrefixes() {
+		return generateNumericPrefixes;
+	}
+
+	public void setGenerateNumericPrefixes(boolean generateNumericPrefixes) {
+		this.generateNumericPrefixes = generateNumericPrefixes;
 	}
 
 	public PaginationMode getPaginationMode() {

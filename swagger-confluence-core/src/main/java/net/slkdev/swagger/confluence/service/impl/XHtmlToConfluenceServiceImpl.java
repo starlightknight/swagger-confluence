@@ -126,23 +126,40 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 			tocFilteredCategoryElements.add(categoryLinkElement);
 		}
 
-		final Elements tocIndividualElements = tocElements.select(".sectlevel2").select("a");
+		final Elements tocIndividualElements = tocElements.select(".sectlevel2");
 
-		addLinksByType(titleLinkMap, tocFilteredCategoryElements, PageType.CATEGORY);
-		addLinksByType(titleLinkMap, tocIndividualElements, PageType.INDIVIDUAL);
+		addLinksByType(titleLinkMap, tocFilteredCategoryElements, PageType.CATEGORY, null);
+
+		int categoryCount = 1;
+
+		for (final Element tocIndividualElement : tocIndividualElements) {
+			final Elements tocIndividualElementLinks = tocIndividualElement.select("a");
+			addLinksByType(titleLinkMap, tocIndividualElementLinks, PageType.INDIVIDUAL, categoryCount);
+			categoryCount++;
+		}
 
 		return titleLinkMap;
 	}
 
 	private void addLinksByType(final Map<String,ConfluenceLink> confluenceLinkMap,
-	                            final Elements elements, final PageType pageType) {
+	                            final Elements elements, final PageType pageType,
+	                            final Integer numericPrefix) {
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+		int linkCount = 1;
 
 		for (final Element element : elements) {
 			final String confluenceLinkMarkup;
 			final String originalTarget = element.attr("href");
 			final String text = element.text();
-			final String confluencePageTitle = swaggerConfluenceConfig.getPrefix() + text;
+			final String confluencePageTitle;
+
+			if(pageType == PageType.INDIVIDUAL) {
+				confluencePageTitle = buildConfluenceTitle(text, numericPrefix, linkCount);
+			}
+			else {
+				confluencePageTitle = buildConfluenceTitle(text, linkCount, null);
+			}
 
 			switch(swaggerConfluenceConfig.getPaginationMode()){
 				case SINGLE_PAGE:
@@ -153,8 +170,16 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
 				case CATEGORY_PAGES:
 					if(pageType == PageType.INDIVIDUAL) {
-						final String definitionsPageTitle = String.format("%sDefinitions",
-								swaggerConfluenceConfig.getPrefix(), text);
+						final String definitionsPageTitle;
+
+						if(swaggerConfluenceConfig.isGenerateNumericPrefixes()){
+							definitionsPageTitle = String.format("3. %sDefinitions",
+									swaggerConfluenceConfig.getPrefix(), text);
+						}
+						else {
+							definitionsPageTitle = String.format("%sDefinitions",
+									swaggerConfluenceConfig.getPrefix(), text);
+						}
 
 						confluenceLinkMarkup = String.format(
 								"<ac:link ac:anchor=\"%s\">\n" +
@@ -165,10 +190,19 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 										"</ac:link>", text, definitionsPageTitle,
 								swaggerConfluenceConfig.getSpaceKey(), text
 						);
-
-						break;
 					}
-					// Intentionally fall-through
+					else {
+						confluenceLinkMarkup = String.format(
+								"<ac:link>\n" +
+										"<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
+										"<ac:link-body>\n" +
+										"<![CDATA[%s]]>\n" +
+										"</ac:link-body>\n" +
+										"</ac:link>", confluencePageTitle,
+								swaggerConfluenceConfig.getSpaceKey(), text
+						);
+					}
+					break;
 
 				case INDIVIDUAL_PAGES:
 					confluenceLinkMarkup = String.format(
@@ -196,6 +230,8 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 			LOG.info("LINK MAP: {} -> {}", originalTarget, confluenceLinkMarkup);
 
 			confluenceLinkMap.put(originalTarget, confluenceLink);
+
+			linkCount++;
 		}
 	}
 
@@ -213,7 +249,6 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
 
 		final PaginationMode paginationMode = swaggerConfluenceConfig.getPaginationMode();
-		final String prefix = swaggerConfluenceConfig.getPrefix();
 
 		final Document originalDocument = SWAGGER_DOCUMENT.get();
 		final Document transformedDocument = originalDocument.clone();
@@ -230,7 +265,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 			final ConfluencePage confluencePage = ConfluencePageBuilder.aConfluencePage()
 					.withPageType(PageType.ROOT)
 					.withOriginalTitle(swaggerConfluenceConfig.getTitle())
-					.withConfluenceTitle(prefix+swaggerConfluenceConfig.getTitle())
+					.withConfluenceTitle(buildConfluenceTitle(swaggerConfluenceConfig.getTitle(), null, null))
 					.withXhtml(transformedDocument.html()).build();
 			confluencePages.add(confluencePage);
 
@@ -265,11 +300,11 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		final ConfluencePage rootConfluencePage = ConfluencePageBuilder.aConfluencePage()
 				.withPageType(PageType.ROOT)
 				.withOriginalTitle(swaggerConfluenceConfig.getTitle())
-				.withConfluenceTitle(prefix+swaggerConfluenceConfig.getTitle())
+				.withConfluenceTitle(buildConfluenceTitle(swaggerConfluenceConfig.getTitle(), null, null))
 				.withXhtml(tocElements.html()).build();
 		confluencePages.add(rootConfluencePage);
 
-		int category = 0;
+		int category = 1;
 
 		// Now we process the category pages
 		for (final Element categoryElement : categoryElements) {
@@ -278,23 +313,29 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
 			// If we're in individual mode then we need these to be sub table of contents
 			if (individualPages) {
+
+
 				final ConfluencePage categoryConfluencePage = ConfluencePageBuilder.aConfluencePage()
 						.withPageType(PageType.CATEGORY)
 						.withOriginalTitle(categoryTitle)
-						.withConfluenceTitle(prefix+categoryTitle)
-						.withXhtml(innerTocXHtmlList.get(category)).build();
+						.withConfluenceTitle(buildConfluenceTitle(categoryTitle, category, null))
+						.withXhtml(innerTocXHtmlList.get(category-1)).build();
 				confluencePages.add(categoryConfluencePage);
 
 				final Elements individualElements = categoryElement.getElementsByClass("sect2");
+
+				int individual = 1;
 
 				for(final Element individualElement : individualElements){
 					final String individualTitle = individualElement.children().first().text();
 					final ConfluencePage individualConfluencePage = ConfluencePageBuilder.aConfluencePage()
 							.withPageType(PageType.INDIVIDUAL)
 							.withOriginalTitle(individualTitle)
-							.withConfluenceTitle(prefix+individualTitle)
+							.withConfluenceTitle(buildConfluenceTitle(individualTitle, category, individual))
 							.withXhtml(individualElement.html()).build();
 					confluencePages.add(individualConfluencePage);
+
+					individual++;
 				}
 
 				category++;
@@ -305,12 +346,37 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 			final ConfluencePage categoryConfluencePage = ConfluencePageBuilder.aConfluencePage()
 					.withPageType(PageType.CATEGORY)
 					.withOriginalTitle(categoryTitle)
-					.withConfluenceTitle(prefix+categoryTitle)
+					.withConfluenceTitle(buildConfluenceTitle(categoryTitle, category, null))
 					.withXhtml(categoryElement.html()).build();
 			confluencePages.add(categoryConfluencePage);
+
+			category++;
 		}
 
 		return confluencePages;
+	}
+
+	private String buildConfluenceTitle(final String originalTitle, final Integer category,
+	                                  final Integer individual){
+		final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+		final StringBuilder confluenceTitleBuilder = new StringBuilder();
+
+		if(category != null && swaggerConfluenceConfig.isGenerateNumericPrefixes()){
+			confluenceTitleBuilder.append(category);
+
+			if(individual != null) {
+				confluenceTitleBuilder.append('.');
+				confluenceTitleBuilder.append(individual);
+			}
+
+			confluenceTitleBuilder.append(". ");
+		}
+
+		confluenceTitleBuilder.append(swaggerConfluenceConfig.getPrefix());
+		confluenceTitleBuilder.append(originalTitle);
+
+		return confluenceTitleBuilder.toString();
 	}
 
 	private void addExistingPageData(final ConfluencePage confluencePage) {
@@ -383,7 +449,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
 		final HttpHeaders httpHeaders = buildHttpHeaders(swaggerConfluenceConfig.getAuthentication());
 		final String formattedXHtml = reformatXHtml(page.getXhtml(), confluenceLinkMap);
-		final String jsonPostBody = buildPostBody(page.getAncestorId(), page.getOriginalTitle(), formattedXHtml).toJSONString();
+		final String jsonPostBody = buildPostBody(page.getAncestorId(), page.getConfluenceTitle(), formattedXHtml).toJSONString();
 
 		LOG.info("CREATE PAGE REQUEST: {}", jsonPostBody);
 
@@ -412,7 +478,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		postVersionObject.put("number", page.getVersion() + 1);
 
 		final String formattedXHtml = reformatXHtml(page.getXhtml(), confluenceLinkMap);
-		final JSONObject postBody = buildPostBody(page.getAncestorId(), page.getOriginalTitle(), formattedXHtml);
+		final JSONObject postBody = buildPostBody(page.getAncestorId(), page.getConfluenceTitle(), formattedXHtml);
 		postBody.put("id", page.getId());
 		postBody.put("version", postVersionObject);
 
@@ -425,7 +491,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		LOG.info("UPDATE PAGE RESPONSE: {}", responseEntity.getBody());
 	}
 
-	private JSONObject buildPostBody(final Integer ancestorId, final String pageTitle, final String xhtml) {
+	private JSONObject buildPostBody(final Integer ancestorId, final String confluenceTitle, final String xhtml) {
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
 
 		final JSONObject jsonSpaceObject = new JSONObject();
@@ -440,7 +506,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
 		final JSONObject jsonObject = new JSONObject();
 		jsonObject.put("type", "page");
-		jsonObject.put("title", swaggerConfluenceConfig.getPrefix()+pageTitle);
+		jsonObject.put("title", confluenceTitle);
 		jsonObject.put("space", jsonSpaceObject);
 		jsonObject.put("body", jsonBodyObject);
 
