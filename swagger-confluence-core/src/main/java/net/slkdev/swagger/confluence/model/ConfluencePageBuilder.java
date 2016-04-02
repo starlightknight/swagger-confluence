@@ -19,10 +19,11 @@ import net.slkdev.swagger.confluence.constants.PageType;
 
 public class ConfluencePageBuilder {
 	private Integer ancestorId;
+	private String confluenceTitle;
 	private Boolean exists;
 	private String id;
+	private String originalTitle;
 	private PageType pageType;
-	private String title;
 	private Integer version;
 	private String xhtml;
 
@@ -38,6 +39,11 @@ public class ConfluencePageBuilder {
 		return this;
 	}
 
+	public ConfluencePageBuilder withConfluenceTitle(String confluenceTitle) {
+		this.confluenceTitle = confluenceTitle;
+		return this;
+	}
+
 	public ConfluencePageBuilder withExists(Boolean exists) {
 		this.exists = exists;
 		return this;
@@ -48,13 +54,13 @@ public class ConfluencePageBuilder {
 		return this;
 	}
 
-	public ConfluencePageBuilder withPageType(PageType pageType) {
-		this.pageType = pageType;
+	public ConfluencePageBuilder withOriginalTitle(String originalTitle) {
+		this.originalTitle = originalTitle;
 		return this;
 	}
 
-	public ConfluencePageBuilder withTitle(String title) {
-		this.title = title;
+	public ConfluencePageBuilder withPageType(PageType pageType) {
+		this.pageType = pageType;
 		return this;
 	}
 
@@ -69,16 +75,17 @@ public class ConfluencePageBuilder {
 	}
 
 	public ConfluencePageBuilder but() {
-		return aConfluencePage().withAncestorId(ancestorId).withExists(exists).withId(id).withPageType(pageType).withTitle(title).withVersion(version).withXhtml(xhtml);
+		return aConfluencePage().withAncestorId(ancestorId).withConfluenceTitle(confluenceTitle).withExists(exists).withId(id).withOriginalTitle(originalTitle).withPageType(pageType).withVersion(version).withXhtml(xhtml);
 	}
 
 	public ConfluencePage build() {
 		ConfluencePage confluencePage = new ConfluencePage();
 		confluencePage.setAncestorId(ancestorId);
+		confluencePage.setConfluenceTitle(confluenceTitle);
 		confluencePage.setExists(exists);
 		confluencePage.setId(id);
+		confluencePage.setOriginalTitle(originalTitle);
 		confluencePage.setPageType(pageType);
-		confluencePage.setTitle(title);
 		confluencePage.setVersion(version);
 		confluencePage.setXhtml(xhtml);
 		return confluencePage;

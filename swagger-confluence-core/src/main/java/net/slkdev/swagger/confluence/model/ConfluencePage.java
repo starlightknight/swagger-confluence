@@ -20,10 +20,11 @@ import net.slkdev.swagger.confluence.constants.PageType;
 public class ConfluencePage {
 
 	private Integer ancestorId;
+	private String confluenceTitle;
 	private Boolean exists;
 	private String id;
+	private String originalTitle;
 	private PageType pageType;
-	private String title;
 	private Integer version;
 	private String xhtml;
 
@@ -33,6 +34,14 @@ public class ConfluencePage {
 
 	public void setAncestorId(Integer ancestorId) {
 		this.ancestorId = ancestorId;
+	}
+
+	public String getConfluenceTitle() {
+		return confluenceTitle;
+	}
+
+	public void setConfluenceTitle(String confluenceTitle) {
+		this.confluenceTitle = confluenceTitle;
 	}
 
 	public boolean exists() {
@@ -51,20 +60,20 @@ public class ConfluencePage {
 		this.id = id;
 	}
 
+	public String getOriginalTitle() {
+		return originalTitle;
+	}
+
+	public void setOriginalTitle(String originalTitle) {
+		this.originalTitle = originalTitle;
+	}
+
 	public PageType getPageType() {
 		return pageType;
 	}
 
 	public void setPageType(PageType pageType) {
 		this.pageType = pageType;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public Integer getVersion() {
