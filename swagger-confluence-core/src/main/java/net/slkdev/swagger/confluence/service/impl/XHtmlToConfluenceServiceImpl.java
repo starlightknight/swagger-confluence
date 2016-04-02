@@ -388,7 +388,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 		final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
 				.path("/content")
 				.queryParam("spaceKey", swaggerConfluenceConfig.getSpaceKey())
-				.queryParam("title", swaggerConfluenceConfig.getPrefix()+confluencePage.getOriginalTitle())
+				.queryParam("title", confluencePage.getConfluenceTitle())
 				.queryParam("expand", "body.storage,version,ancestors")
 				.build()
 				.toUri();
@@ -404,17 +404,39 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 			final Integer version = JsonPath.read(jsonBody, "$.results[0].version.number");
 
 			final JSONArray ancestors = JsonPath.read(jsonBody, "$.results[0].ancestors");
-			final Map<String,Object> lastAncestor = (Map<String,Object>)ancestors.get(ancestors.size()-1);
-			final Integer ancestorId = Integer.valueOf((String)lastAncestor.get("id"));
 
-			LOG.info("ANCESTORS: {} : {}, CHOSE -> {}", ancestors.getClass().getName(), ancestors, ancestorId);
+			if(!ancestors.isEmpty()) {
+				final Map<String, Object> lastAncestor = (Map<String, Object>) ancestors.get(ancestors.size() - 1);
+				final Integer ancestorId = Integer.valueOf((String) lastAncestor.get("id"));
+
+				LOG.info("ANCESTORS: {} : {}, CHOSE -> {}", ancestors.getClass().getName(), ancestors, ancestorId);
+				confluencePage.setAncestorId(ancestorId);
+			}
 
 			confluencePage.setId(id);
 			confluencePage.setVersion(version);
 			confluencePage.setExists(true);
-			confluencePage.setAncestorId(ancestorId);
 		} catch (final PathNotFoundException e) {
 			confluencePage.setExists(false);
+
+			// Prevent New Pages from Being Orphaned if there was no ancestor id
+			// specified by querying for the id of the space root. Confluence
+			// does not do this automatically, and thus you would otherwise not be
+			// able to navigate to the page unless you manually knew the URL
+			if(confluencePage.getAncestorId() == null){
+				final ConfluencePage spaceRootPage = ConfluencePageBuilder.aConfluencePage()
+						.withConfluenceTitle(swaggerConfluenceConfig.getSpaceKey())
+						.withOriginalTitle(swaggerConfluenceConfig.getSpaceKey())
+						.build();
+				addExistingPageData(spaceRootPage);
+
+				final Integer spaceRootAncestorId = Integer.valueOf(spaceRootPage.getId());
+
+				LOG.info("ORPHAN PREVENTION FAIL SAFE: Using Space Root Ancestor Id {}",
+						spaceRootAncestorId);
+
+				confluencePage.setAncestorId(spaceRootAncestorId);
+			}
 		}
 	}
 
@@ -446,6 +468,10 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 				.path("/content")
 				.build()
 				.toUri();
+
+		if(page.getAncestorId() == null){
+
+		}
 
 		final HttpHeaders httpHeaders = buildHttpHeaders(swaggerConfluenceConfig.getAuthentication());
 		final String formattedXHtml = reformatXHtml(page.getXhtml(), confluenceLinkMap);
