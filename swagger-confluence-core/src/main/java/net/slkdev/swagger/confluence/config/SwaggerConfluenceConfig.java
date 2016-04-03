@@ -24,6 +24,7 @@ public class SwaggerConfluenceConfig {
     private String authentication;
     private String confluenceRestApiUrl;
     private boolean generateNumericPrefixes;
+    private boolean includeTableOfContentsOnSinglePage;
     private PaginationMode paginationMode;
     private String prefix;
     private String spaceKey;
@@ -32,6 +33,7 @@ public class SwaggerConfluenceConfig {
 
     public SwaggerConfluenceConfig() {
         generateNumericPrefixes = true;
+        includeTableOfContentsOnSinglePage = true;
         paginationMode = PaginationMode.SINGLE_PAGE;
     }
 
@@ -39,7 +41,7 @@ public class SwaggerConfluenceConfig {
         return ancestorId;
     }
 
-    public void setAncestorId(Integer ancestorId) {
+    public void setAncestorId(final Integer ancestorId) {
         this.ancestorId = ancestorId;
     }
 
@@ -63,19 +65,27 @@ public class SwaggerConfluenceConfig {
         return generateNumericPrefixes;
     }
 
-    public void setGenerateNumericPrefixes(boolean generateNumericPrefixes) {
+    public void setGenerateNumericPrefixes(final boolean generateNumericPrefixes) {
         this.generateNumericPrefixes = generateNumericPrefixes;
+    }
+
+    public boolean isIncludeTableOfContentsOnSinglePage() {
+        return includeTableOfContentsOnSinglePage;
+    }
+
+    public void setIncludeTableOfContentsOnSinglePage(final boolean includeTableOfContentsOnSinglePage) {
+        this.includeTableOfContentsOnSinglePage = includeTableOfContentsOnSinglePage;
     }
 
     public PaginationMode getPaginationMode() {
         return paginationMode;
     }
 
-    public void setPaginationMode(PaginationMode paginationMode) {
+    public void setPaginationMode(final PaginationMode paginationMode) {
         this.paginationMode = paginationMode;
     }
 
-    public void setPaginationMode(String paginationMode) {
+    public void setPaginationMode(final String paginationMode) {
         switch (paginationMode) {
             case "single":
                 this.paginationMode = PaginationMode.SINGLE_PAGE;

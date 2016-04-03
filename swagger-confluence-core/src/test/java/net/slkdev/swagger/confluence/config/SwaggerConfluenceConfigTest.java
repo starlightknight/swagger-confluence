@@ -80,6 +80,18 @@ public class SwaggerConfluenceConfigTest {
     }
 
     @Test
+    public void testDefaultIncludeTableOfContentsOnSinglePage(){
+        assertTrue("Default Should \"true\"", swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage());
+    }
+
+    @Test
+    public void testGetAndSetIncludeTableOfContentsOnSinglePage(){
+        swaggerConfluenceConfig.setIncludeTableOfContentsOnSinglePage(false);
+        assertFalse("Expected Include Table Of Contents On Single Page -> False",
+                swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage());
+    }
+
+    @Test
     public void testDefaultPaginationModeIsSingle(){
         assertEquals("Default Should \"SINGLE_PAGE\"", PaginationMode.SINGLE_PAGE,
                 swaggerConfluenceConfig.getPaginationMode());

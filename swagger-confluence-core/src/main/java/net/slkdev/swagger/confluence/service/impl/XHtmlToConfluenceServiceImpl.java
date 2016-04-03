@@ -260,8 +260,17 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             final ConfluencePage confluencePage = ConfluencePageBuilder.aConfluencePage()
                     .withPageType(PageType.ROOT)
                     .withOriginalTitle(swaggerConfluenceConfig.getTitle())
-                    .withConfluenceTitle(buildConfluenceTitle(swaggerConfluenceConfig.getTitle(), null, null))
-                    .withXhtml(transformedDocument.html()).build();
+                    .withConfluenceTitle(
+                            buildConfluenceTitle(swaggerConfluenceConfig.getTitle(), null, null)
+                    ).build();
+
+            if(swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage()){
+                confluencePage.setXhtml(originalDocument.html());
+            }
+            else {
+                confluencePage.setXhtml(transformedDocument.html());
+            }
+
             confluencePages.add(confluencePage);
 
             return confluencePages;

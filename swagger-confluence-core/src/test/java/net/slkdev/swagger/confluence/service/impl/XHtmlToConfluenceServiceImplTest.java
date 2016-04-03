@@ -102,8 +102,9 @@ public class XHtmlToConfluenceServiceImplTest {
 	}
 
 	@Test
-	public void testUpdatePageWithPaginationModeSingle(){
+	public void testUpdatePageWithPaginationModeSingleAndNoTableOfContents(){
 		final SwaggerConfluenceConfig swaggerConfluenceConfig = getTestSwaggerConfluenceConfig();
+        swaggerConfluenceConfig.setIncludeTableOfContentsOnSinglePage(false);
 
 		final String xhtml = IOUtils.readFull(
 				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
