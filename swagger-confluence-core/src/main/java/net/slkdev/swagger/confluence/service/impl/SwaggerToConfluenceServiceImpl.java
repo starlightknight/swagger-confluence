@@ -50,10 +50,10 @@ public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceServic
         final String prefix = swaggerConfluenceConfig.getPrefix();
         final PaginationMode paginationMode = swaggerConfluenceConfig.getPaginationMode();
 
-        notNull("Swagger Schema Cannot Be Null!", swaggerSchema);
-        notNull("Confluence REST API URL Cannot Be Null!", confluenceRestApiUrl);
-        notNull("Confluence Authentication Cannot Be Null!", swaggerConfluenceConfig.getAuthentication());
-        notNull("Confluence Space Key Cannot Be Null!", spaceKey);
+        notNull(swaggerSchema, "Swagger Schema Cannot Be Null!");
+        notNull(confluenceRestApiUrl, "Confluence REST API URL Cannot Be Null!");
+        notNull(swaggerConfluenceConfig.getAuthentication(), "Confluence Authentication Cannot Be Null!");
+        notNull(spaceKey, "Confluence Space Key Cannot Be Null!");
 
         LOG.info("Publishing Swagger API Documentation to Confluence...");
         LOG.info("Swagger Schema: {}", swaggerSchema);

@@ -55,6 +55,12 @@ import static org.jsoup.nodes.Entities.EscapeMode.xhtml;
 public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
     private static final Logger LOG = LoggerFactory.getLogger(XHtmlToConfluenceServiceImpl.class);
+
+    private static final String EXPAND = "expand";
+    private static final String ID = "id";
+    private static final String SPACE_KEY = "spaceKey";
+    private static final String TITLE = "title";
+
     private static final ThreadLocal<SwaggerConfluenceConfig> SWAGGER_CONFLUENCE_CONFIG = new ThreadLocal<>();
     private static final ThreadLocal<Document> SWAGGER_DOCUMENT = new ThreadLocal<>();
 
@@ -104,7 +110,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                 updatePage(confluencePage, titleLinkMap);
 
                 if(pageType == PageType.CATEGORY){
-                    cleanPages(confluencePages, confluencePage);
+                    cleanPages(confluencePage);
                 }
             } else {
                 createPage(confluencePage, titleLinkMap);
@@ -169,55 +175,16 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
             switch (swaggerConfluenceConfig.getPaginationMode()) {
                 case SINGLE_PAGE:
-                    confluenceLinkMarkup = String.format(
-                            "<ac:link ac:anchor=\"%s\" />", text
-                    );
+                    confluenceLinkMarkup = formatSinglePageLink(text);
                     break;
 
                 case CATEGORY_PAGES:
-                    if (pageType == INDIVIDUAL) {
-                        final String definitionsPageTitle;
-
-                        if (swaggerConfluenceConfig.isGenerateNumericPrefixes()) {
-                            definitionsPageTitle = String.format("3. %sDefinitions",
-                                    swaggerConfluenceConfig.getPrefix());
-                        } else {
-                            definitionsPageTitle = String.format("%sDefinitions",
-                                    swaggerConfluenceConfig.getPrefix());
-                        }
-
-                        confluenceLinkMarkup = String.format(
-                                "<ac:link ac:anchor=\"%s\">\n" +
-                                        "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
-                                        "<ac:link-body>\n" +
-                                        "<![CDATA[%s]]>\n" +
-                                        "</ac:link-body>\n" +
-                                        "</ac:link>", text, definitionsPageTitle,
-                                swaggerConfluenceConfig.getSpaceKey(), text
-                        );
-                    } else {
-                        confluenceLinkMarkup = String.format(
-                                "<ac:link>\n" +
-                                        "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
-                                        "<ac:link-body>\n" +
-                                        "<![CDATA[%s]]>\n" +
-                                        "</ac:link-body>\n" +
-                                        "</ac:link>", confluencePageTitle,
-                                swaggerConfluenceConfig.getSpaceKey(), text
-                        );
-                    }
+                    confluenceLinkMarkup = formatCategoryPageLink(text,
+                            confluencePageTitle, pageType);
                     break;
 
                 case INDIVIDUAL_PAGES:
-                    confluenceLinkMarkup = String.format(
-                            "<ac:link>\n" +
-                                    "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
-                                    "<ac:link-body>\n" +
-                                    "<![CDATA[%s]]>\n" +
-                                    "</ac:link-body>\n" +
-                                    "</ac:link>", confluencePageTitle,
-                            swaggerConfluenceConfig.getSpaceKey(), text
-                    );
+                    confluenceLinkMarkup = formatIndividualPageLink(text, confluencePageTitle);
                     break;
 
                 default:
@@ -239,6 +206,61 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         }
     }
 
+    private static String formatSinglePageLink(final String text){
+        return String.format("<ac:link ac:anchor=\"%s\" />", text);
+    }
+
+    private static String formatCategoryPageLink(final String text,
+                                                 final String confluencePageTitle,
+                                                 final PageType pageType){
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        if (pageType == INDIVIDUAL) {
+            final String definitionsPageTitle;
+
+            if (swaggerConfluenceConfig.isGenerateNumericPrefixes()) {
+                definitionsPageTitle = String.format("3. %sDefinitions",
+                        swaggerConfluenceConfig.getPrefix());
+            } else {
+                definitionsPageTitle = String.format("%sDefinitions",
+                        swaggerConfluenceConfig.getPrefix());
+            }
+
+            return String.format(
+                    "<ac:link ac:anchor=\"%s\">\n" +
+                            "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
+                            "<ac:link-body>\n" +
+                            "<![CDATA[%s]]>\n" +
+                            "</ac:link-body>\n" +
+                            "</ac:link>", text, definitionsPageTitle,
+                    swaggerConfluenceConfig.getSpaceKey(), text
+            );
+        } else {
+            return String.format(
+                    "<ac:link>\n" +
+                            "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
+                            "<ac:link-body>\n" +
+                            "<![CDATA[%s]]>\n" +
+                            "</ac:link-body>\n" +
+                            "</ac:link>", confluencePageTitle,
+                    swaggerConfluenceConfig.getSpaceKey(), text
+            );
+        }
+    }
+
+    private static String formatIndividualPageLink(final String text, final String confluencePageTitle){
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        return String.format(
+                "<ac:link>\n" +
+                        "<ri:page ri:content-title=\"%s\" ri:space-key=\"%s\"/>" +
+                        "<ac:link-body>\n" +
+                        "<![CDATA[%s]]>\n" +
+                        "</ac:link-body>\n" +
+                        "</ac:link>", confluencePageTitle,
+                swaggerConfluenceConfig.getSpaceKey(), text
+        );
+    }
     private static Document parseXhtml(final String inputXhtml) {
         final Document originalDocument = Jsoup.parse(inputXhtml, "utf-8", Parser.xmlParser());
         originalDocument.outputSettings().prettyPrint(false);
@@ -400,9 +422,9 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
                 .path("/content")
-                .queryParam("spaceKey", swaggerConfluenceConfig.getSpaceKey())
-                .queryParam("title", confluencePage.getConfluenceTitle())
-                .queryParam("expand", "body.storage,version,ancestors")
+                .queryParam(SPACE_KEY, swaggerConfluenceConfig.getSpaceKey())
+                .queryParam(TITLE, confluencePage.getConfluenceTitle())
+                .queryParam(EXPAND, "body.storage,version,ancestors")
                 .build()
                 .toUri();
 
@@ -421,7 +443,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
             if (!ancestors.isEmpty()) {
                 final Map<String, Object> lastAncestor = (Map<String, Object>) ancestors.get(ancestors.size() - 1);
-                final Integer ancestorId = Integer.valueOf((String) lastAncestor.get("id"));
+                final Integer ancestorId = Integer.valueOf((String) lastAncestor.get(ID));
 
                 LOG.debug("ANCESTORS: {} : {}, CHOSE -> {}", ancestors.getClass().getName(), ancestors, ancestorId);
                 confluencePage.setAncestorId(ancestorId);
@@ -475,21 +497,18 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         try {
             final JSONObject response = jsonParser.parse(responseJson, JSONObject.class);
-            return Integer.valueOf((String) response.get("id"));
+            return Integer.valueOf((String) response.get(ID));
         } catch (ParseException e) {
             throw new ConfluenceAPIException("Error Parsing JSON Response from Confluence!", e);
         }
     }
 
-    private void cleanPages(final List<ConfluencePage> confluencePages,
-                            final ConfluencePage targetPage){
+    private void cleanPages(final ConfluencePage targetPage){
         final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
 
         if(swaggerConfluenceConfig.getPaginationMode() != PaginationMode.INDIVIDUAL_PAGES){
             return;
         }
-
-        final String prefix = swaggerConfluenceConfig.getPrefix();
 
         final HttpHeaders httpHeaders = buildHttpHeaders(swaggerConfluenceConfig.getAuthentication());
         final HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
@@ -498,7 +517,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
                 .path(path)
-                .queryParam("expand", "page")
+                .queryParam(EXPAND, "page")
                 .build()
                 .toUri();
 
@@ -514,8 +533,8 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         // were created by Swagger Confluence by carefully matching the names.
         while(iterator.hasNext()){
             final Map<String,Object> page = (Map<String,Object>) iterator.next();
-            final String id = (String) page.get("id");
-            final String title = (String) page.get("title");
+            final String id = (String) page.get(ID);
+            final String title = (String) page.get(TITLE);
             deletePage(id, title);
         }
     }
@@ -530,7 +549,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
                 .path(path)
-                .queryParam("expand", "page")
+                .queryParam(EXPAND, "page")
                 .build()
                 .toUri();
 
@@ -542,7 +561,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         }
         catch(final HttpClientErrorException e){
             throw new ConfluenceAPIException(String.format("Failed to Clean Page -> %s : %s",
-                    pageId, title));
+                    pageId, title), e);
         }
 
         if(responseEntity.getStatusCode() == HttpStatus.NO_CONTENT) {
@@ -593,7 +612,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final String formattedXHtml = reformatXHtml(page.getXhtml(), confluenceLinkMap);
         final JSONObject postBody = buildPostBody(page.getAncestorId(), page.getConfluenceTitle(), formattedXHtml);
-        postBody.put("id", page.getId());
+        postBody.put(ID, page.getId());
         postBody.put("version", postVersionObject);
 
         final HttpEntity<String> requestEntity = new HttpEntity<>(postBody.toJSONString(), httpHeaders);
@@ -623,14 +642,14 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final JSONObject jsonObject = new JSONObject();
         jsonObject.put("type", "page");
-        jsonObject.put("title", confluenceTitle);
+        jsonObject.put(TITLE, confluenceTitle);
         jsonObject.put("space", jsonSpaceObject);
         jsonObject.put("body", jsonBodyObject);
 
         if (ancestorId != null) {
             final JSONObject ancestor = new JSONObject();
             ancestor.put("type", "page");
-            ancestor.put("id", ancestorId);
+            ancestor.put(ID, ancestorId);
 
             final JSONArray ancestors = new JSONArray();
             ancestors.add(ancestor);
