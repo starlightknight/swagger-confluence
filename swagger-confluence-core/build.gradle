@@ -20,7 +20,7 @@ bintray {
     publications = ['myPublication']
     pkg {
         version {
-            name = '1.0-RELEASE'
+            name = version
         }
         repo = "$System.env.BINTRAY_REPO"
         name = 'swagger-confluence-core'
