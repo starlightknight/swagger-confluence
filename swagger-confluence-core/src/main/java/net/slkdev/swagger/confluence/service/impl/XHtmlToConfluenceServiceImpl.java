@@ -31,7 +31,6 @@ import net.slkdev.swagger.confluence.model.ConfluenceLinkBuilder;
 import net.slkdev.swagger.confluence.model.ConfluencePage;
 import net.slkdev.swagger.confluence.model.ConfluencePageBuilder;
 import net.slkdev.swagger.confluence.service.XHtmlToConfluenceService;
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -574,20 +573,30 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             linkElement.unwrap();
         }
 
-        String outputXHtml = document.html();
-        outputXHtml = StringUtils.replace(outputXHtml, "<div class=\"sect", "<br/>\n<div class=\"sect");
-        outputXHtml = StringUtils.replace(outputXHtml,
-                "<h2 id=\"_overview\">Overview</h2>",
-                "<h2 id=\"_overview\"><strong>Overview</strong></h2>");
-        outputXHtml = StringUtils.replace(outputXHtml,
-                "<h2 id=\"_definitions\">Definitions</h2>",
-                "<h2 id=\"_definitions\"><strong>Definitions</strong></h2>");
-        outputXHtml = StringUtils.replace(outputXHtml,
-                "<h2 id=\"_paths\">Paths</h2>",
-                "<h2 id=\"_paths\"><strong>Paths</strong></h2>");
-        outputXHtml = StringUtils.replaceOnce(outputXHtml, "<br/>", "");
+        reformatXHtmlHeadings(document, "h2");
+        reformatXHtmlHeadings(document, "h3");
+        reformatXHtmlHeadings(document, "#toctitle");
 
-        return outputXHtml;
+        reformatXHtmlSpacing(document.select(".sect2"));
+        reformatXHtmlSpacing(document.select(".sect3"));
+
+        return document.html();
+    }
+
+    private static void reformatXHtmlHeadings(final Document document, final String selector){
+        final Elements elements = document.select(selector);
+
+        for(final Element element : elements){
+            final String text = element.text();
+            final String strongHeaderText = String.format("<strong>%s</strong>", text);
+            element.html(strongHeaderText);
+        }
+    }
+
+    private static void reformatXHtmlSpacing(final Elements elements){
+        for(final Element element : elements){
+            element.before("<br />");
+        }
     }
 
 }
