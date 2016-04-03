@@ -44,7 +44,7 @@ public class ConfluencePage {
         this.confluenceTitle = confluenceTitle;
     }
 
-    public boolean exists() {
+    public Boolean exists() {
         return exists;
     }
 

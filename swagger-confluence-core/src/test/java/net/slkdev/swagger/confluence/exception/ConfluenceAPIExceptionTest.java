@@ -22,7 +22,18 @@ import static org.junit.Assert.assertEquals;
 public class ConfluenceAPIExceptionTest {
 
     @Test
-    public void testConfluenceAPIException(){
+    public void testSwaggerConfluenceConfigurationExceptionWithNoCause(){
+        final String message = "message";
+
+        final ConfluenceAPIException confluenceAPIException =
+                new ConfluenceAPIException(message);
+
+        assertEquals("Expected Message Doesn't Match", message,
+                confluenceAPIException.getMessage());
+    }
+
+    @Test
+    public void testConfluenceAPIExceptionWithCause(){
         final String message = "message";
         final Throwable cause = new Exception();
 

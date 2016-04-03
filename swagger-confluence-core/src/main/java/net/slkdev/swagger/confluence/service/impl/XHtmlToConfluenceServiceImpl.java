@@ -39,6 +39,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -46,6 +47,7 @@ import java.net.URI;
 import java.util.*;
 
 import static net.minidev.json.parser.JSONParser.DEFAULT_PERMISSIVE_MODE;
+import static net.slkdev.swagger.confluence.constants.PageType.INDIVIDUAL;
 import static net.slkdev.swagger.confluence.constants.PaginationMode.INDIVIDUAL_PAGES;
 import static net.slkdev.swagger.confluence.constants.PaginationMode.SINGLE_PAGE;
 import static org.jsoup.nodes.Entities.EscapeMode.xhtml;
@@ -65,6 +67,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
     @Override
     public void postXHtmlToConfluence(final SwaggerConfluenceConfig swaggerConfluenceConfig, final String xhtml) {
         LOG.info("Posting XHTML to Confluence...");
+
         SWAGGER_CONFLUENCE_CONFIG.set(swaggerConfluenceConfig);
         SWAGGER_DOCUMENT.set(parseXhtml(xhtml));
 
@@ -93,10 +96,16 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                     throw new SwaggerConfluenceConfigurationException("Unknown Page Type Encountered!");
             }
 
+            LOG.debug("ANCESTOR ID SET: <{}> -> {}", confluencePage.getConfluenceTitle(), confluencePage.getAncestorId());
+
             addExistingPageData(confluencePage);
 
             if (confluencePage.exists()) {
                 updatePage(confluencePage, titleLinkMap);
+
+                if(pageType == PageType.CATEGORY){
+                    cleanPages(confluencePages, confluencePage);
+                }
             } else {
                 createPage(confluencePage, titleLinkMap);
             }
@@ -132,7 +141,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         for (final Element tocIndividualElement : tocIndividualElements) {
             final Elements tocIndividualElementLinks = tocIndividualElement.select("a");
-            addLinksByType(titleLinkMap, tocIndividualElementLinks, PageType.INDIVIDUAL, categoryCount);
+            addLinksByType(titleLinkMap, tocIndividualElementLinks, INDIVIDUAL, categoryCount);
             categoryCount++;
         }
 
@@ -152,7 +161,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             final String text = element.text();
             final String confluencePageTitle;
 
-            if (pageType == PageType.INDIVIDUAL) {
+            if (pageType == INDIVIDUAL) {
                 confluencePageTitle = buildConfluenceTitle(text, numericPrefix, linkCount);
             } else {
                 confluencePageTitle = buildConfluenceTitle(text, linkCount, null);
@@ -166,7 +175,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                     break;
 
                 case CATEGORY_PAGES:
-                    if (pageType == PageType.INDIVIDUAL) {
+                    if (pageType == INDIVIDUAL) {
                         final String definitionsPageTitle;
 
                         if (swaggerConfluenceConfig.isGenerateNumericPrefixes()) {
@@ -333,7 +342,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                 for (final Element individualElement : individualElements) {
                     final String individualTitle = individualElement.children().first().text();
                     final ConfluencePage individualConfluencePage = ConfluencePageBuilder.aConfluencePage()
-                            .withPageType(PageType.INDIVIDUAL)
+                            .withPageType(INDIVIDUAL)
                             .withOriginalTitle(individualTitle)
                             .withConfluenceTitle(buildConfluenceTitle(individualTitle, category, individual))
                             .withXhtml(individualElement.html()).build();
@@ -422,12 +431,13 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             confluencePage.setVersion(version);
             confluencePage.setExists(true);
 
-            LOG.info("Page {} Already Exists, Performing an Update!", confluencePage.getId());
+            LOG.info("Page <{} : {}> Already Exists, Performing an Update!", confluencePage.getId(),
+                    confluencePage.getConfluenceTitle());
 
         } catch (final PathNotFoundException e) {
             confluencePage.setExists(false);
 
-            LOG.info("Page Does Not Exist, Creating a New Page!");
+            LOG.info("Page <{}> Does Not Exist, Creating a New Page!", confluencePage.getConfluenceTitle());
 
             // Prevent New Pages from Being Orphaned if there was no ancestor id
             // specified by querying for the id of the space root. Confluence
@@ -468,6 +478,79 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             return Integer.valueOf((String) response.get("id"));
         } catch (ParseException e) {
             throw new ConfluenceAPIException("Error Parsing JSON Response from Confluence!", e);
+        }
+    }
+
+    private void cleanPages(final List<ConfluencePage> confluencePages,
+                            final ConfluencePage targetPage){
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        if(swaggerConfluenceConfig.getPaginationMode() != PaginationMode.INDIVIDUAL_PAGES){
+            return;
+        }
+
+        final String prefix = swaggerConfluenceConfig.getPrefix();
+
+        final HttpHeaders httpHeaders = buildHttpHeaders(swaggerConfluenceConfig.getAuthentication());
+        final HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
+
+        final String path = String.format("/content/%s/child", targetPage.getId());
+
+        final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
+                .path(path)
+                .queryParam("expand", "page")
+                .build()
+                .toUri();
+
+        final ResponseEntity<String> responseEntity = restTemplate.exchange(targetUrl,
+                HttpMethod.GET, requestEntity, String.class);
+
+        final String jsonBody = responseEntity.getBody();
+        final JSONArray jsonArray = JsonPath.read(jsonBody, "$.page.results");
+
+        final Iterator<Object> iterator = jsonArray.iterator();
+
+        // This matching is designed to make sure we only clean out pages that
+        // were created by Swagger Confluence by carefully matching the names.
+        while(iterator.hasNext()){
+            final Map<String,Object> page = (Map<String,Object>) iterator.next();
+            final String id = (String) page.get("id");
+            final String title = (String) page.get("title");
+            deletePage(id, title);
+        }
+    }
+
+    private void deletePage(final String pageId, final String title){
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        final HttpHeaders httpHeaders = buildHttpHeaders(swaggerConfluenceConfig.getAuthentication());
+        final HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
+
+        final String path = String.format("/content/%s", pageId);
+
+        final URI targetUrl = UriComponentsBuilder.fromUriString(swaggerConfluenceConfig.getConfluenceRestApiUrl())
+                .path(path)
+                .queryParam("expand", "page")
+                .build()
+                .toUri();
+
+        final ResponseEntity<String> responseEntity;
+
+        try {
+            responseEntity = restTemplate.exchange(targetUrl,
+                    HttpMethod.DELETE, requestEntity, String.class);
+        }
+        catch(final HttpClientErrorException e){
+            throw new ConfluenceAPIException(String.format("Failed to Clean Page -> %s : %s",
+                    pageId, title));
+        }
+
+        if(responseEntity.getStatusCode() == HttpStatus.NO_CONTENT) {
+            LOG.info("Cleaned Path Page -> {} : {}", pageId, title);
+        }
+        else {
+            throw new ConfluenceAPIException(String.format("Failed to Clean Page -> %s : %s",
+                    pageId, title));
         }
     }
 
@@ -520,6 +603,9 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         final HttpEntity<String> responseEntity = restTemplate.exchange(targetUrl, HttpMethod.PUT, requestEntity, String.class);
 
         LOG.debug("UPDATE PAGE RESPONSE: {}", responseEntity.getBody());
+
+        final Integer pageId = getPageIdFromResponse(responseEntity);
+        page.setAncestorId(pageId);
     }
 
     private static JSONObject buildPostBody(final Integer ancestorId, final String confluenceTitle, final String xhtml) {

@@ -17,6 +17,10 @@ package net.slkdev.swagger.confluence.exception;
 
 public class ConfluenceAPIException extends RuntimeException {
 
+    public ConfluenceAPIException(String message) {
+        super(message);
+    }
+
     public ConfluenceAPIException(String message, Throwable cause) {
         super(message, cause);
     }

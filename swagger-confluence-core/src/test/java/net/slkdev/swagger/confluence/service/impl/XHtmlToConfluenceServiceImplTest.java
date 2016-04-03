@@ -30,6 +30,9 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -48,7 +51,13 @@ public class XHtmlToConfluenceServiceImplTest {
 
 	private static final String GET_RESPONSE_NOT_FOUND = "{\"results\":[]}";
 
+    private static final String GET_CHILDREN = "{\"page\":{\"results\":[{\"id\":\"1\",\"type\":\"" +
+            "page\",\"status\":\"current\",\"title\":\"Test\",\"extensions\":{\"position\":\"none\"" +
+            "}}]}}";
+
 	private static final String POST_RESPONSE = "{\"id\":\"1\"}";
+
+    private static final List<Integer> CATEGORY_INDEXES = Arrays.asList(1, 6, 25);
 
 	@Mock
 	private RestTemplate restTemplate;
@@ -275,19 +284,38 @@ public class XHtmlToConfluenceServiceImplTest {
 
         final ResponseEntity<String> postResponseEntity = new ResponseEntity<>(POST_RESPONSE, HttpStatus.OK);
 
+        final List<String> returnJson = new ArrayList<>();
+
+        when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
+                any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
+
         for(int i = 0; i < 31; i++) {
-            when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
-                    any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
-            when(responseEntity.getBody()).thenReturn(GET_RESPONSE_FOUND);
-            when(restTemplate.exchange(any(URI.class), eq(HttpMethod.PUT),
-                    any(RequestEntity.class), eq(String.class))).thenReturn(postResponseEntity);
+            if(i > 0) {
+                returnJson.add(GET_RESPONSE_FOUND);
+            }
+
+            if(CATEGORY_INDEXES.contains(i)){
+                returnJson.add(GET_CHILDREN);
+            }
         }
+
+        final String[] returnJsonArray = new String[returnJson.size()];
+        returnJson.toArray(returnJsonArray);
+
+        when(responseEntity.getBody()).thenReturn(GET_RESPONSE_FOUND, returnJsonArray);
+
+        when(restTemplate.exchange(any(URI.class), eq(HttpMethod.DELETE),
+                any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
+        when(responseEntity.getStatusCode()).thenReturn(HttpStatus.NO_CONTENT);
+
+        when(restTemplate.exchange(any(URI.class), eq(HttpMethod.PUT),
+                any(RequestEntity.class), eq(String.class))).thenReturn(postResponseEntity);
 
         final ArgumentCaptor<HttpEntity> httpEntityCaptor = ArgumentCaptor.forClass(HttpEntity.class);
 
         xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 
-        verify(restTemplate, times(31)).exchange(any(URI.class), eq(HttpMethod.GET),
+        verify(restTemplate, times(34)).exchange(any(URI.class), eq(HttpMethod.GET),
                 any(RequestEntity.class), eq(String.class));
         verify(restTemplate, times(31)).exchange(any(URI.class), eq(HttpMethod.PUT),
                 httpEntityCaptor.capture(), eq(String.class));
