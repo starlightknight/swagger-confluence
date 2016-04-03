@@ -16,5 +16,5 @@
 package net.slkdev.swagger.confluence.constants;
 
 public enum PageType {
-	ROOT, CATEGORY, INDIVIDUAL
+    ROOT, CATEGORY, INDIVIDUAL
 }

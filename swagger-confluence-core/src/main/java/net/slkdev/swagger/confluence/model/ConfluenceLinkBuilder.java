@@ -18,48 +18,48 @@ package net.slkdev.swagger.confluence.model;
 import net.slkdev.swagger.confluence.constants.PageType;
 
 public class ConfluenceLinkBuilder {
-	private PageType pageType;
-	private String originalHref;
-	private String confluenceLinkMarkup;
-	private String text;
+    private PageType pageType;
+    private String originalHref;
+    private String confluenceLinkMarkup;
+    private String text;
 
-	private ConfluenceLinkBuilder() {
-	}
+    private ConfluenceLinkBuilder() {
+    }
 
-	public static ConfluenceLinkBuilder aConfluenceLink() {
-		return new ConfluenceLinkBuilder();
-	}
+    public static ConfluenceLinkBuilder aConfluenceLink() {
+        return new ConfluenceLinkBuilder();
+    }
 
-	public ConfluenceLinkBuilder withPageType(PageType pageType) {
-		this.pageType = pageType;
-		return this;
-	}
+    public ConfluenceLinkBuilder withPageType(PageType pageType) {
+        this.pageType = pageType;
+        return this;
+    }
 
-	public ConfluenceLinkBuilder withOriginalHref(String originalHref) {
-		this.originalHref = originalHref;
-		return this;
-	}
+    public ConfluenceLinkBuilder withOriginalHref(String originalHref) {
+        this.originalHref = originalHref;
+        return this;
+    }
 
-	public ConfluenceLinkBuilder withConfluenceLinkMarkup(String confluenceLinkMarkup) {
-		this.confluenceLinkMarkup = confluenceLinkMarkup;
-		return this;
-	}
+    public ConfluenceLinkBuilder withConfluenceLinkMarkup(String confluenceLinkMarkup) {
+        this.confluenceLinkMarkup = confluenceLinkMarkup;
+        return this;
+    }
 
-	public ConfluenceLinkBuilder withText(String text) {
-		this.text = text;
-		return this;
-	}
+    public ConfluenceLinkBuilder withText(String text) {
+        this.text = text;
+        return this;
+    }
 
-	public ConfluenceLinkBuilder but() {
-		return aConfluenceLink().withPageType(pageType).withOriginalHref(originalHref).withConfluenceLinkMarkup(confluenceLinkMarkup).withText(text);
-	}
+    public ConfluenceLinkBuilder but() {
+        return aConfluenceLink().withPageType(pageType).withOriginalHref(originalHref).withConfluenceLinkMarkup(confluenceLinkMarkup).withText(text);
+    }
 
-	public ConfluenceLink build() {
-		ConfluenceLink confluenceLink = new ConfluenceLink();
-		confluenceLink.setPageType(pageType);
-		confluenceLink.setOriginalHref(originalHref);
-		confluenceLink.setConfluenceLinkMarkup(confluenceLinkMarkup);
-		confluenceLink.setText(text);
-		return confluenceLink;
-	}
+    public ConfluenceLink build() {
+        ConfluenceLink confluenceLink = new ConfluenceLink();
+        confluenceLink.setPageType(pageType);
+        confluenceLink.setOriginalHref(originalHref);
+        confluenceLink.setConfluenceLinkMarkup(confluenceLinkMarkup);
+        confluenceLink.setText(text);
+        return confluenceLink;
+    }
 }

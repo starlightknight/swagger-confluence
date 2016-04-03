@@ -19,77 +19,77 @@ import net.slkdev.swagger.confluence.constants.PageType;
 
 public class ConfluencePage {
 
-	private Integer ancestorId;
-	private String confluenceTitle;
-	private Boolean exists;
-	private String id;
-	private String originalTitle;
-	private PageType pageType;
-	private Integer version;
-	private String xhtml;
+    private Integer ancestorId;
+    private String confluenceTitle;
+    private Boolean exists;
+    private String id;
+    private String originalTitle;
+    private PageType pageType;
+    private Integer version;
+    private String xhtml;
 
-	public Integer getAncestorId() {
-		return ancestorId;
-	}
+    public Integer getAncestorId() {
+        return ancestorId;
+    }
 
-	public void setAncestorId(Integer ancestorId) {
-		this.ancestorId = ancestorId;
-	}
+    public void setAncestorId(Integer ancestorId) {
+        this.ancestorId = ancestorId;
+    }
 
-	public String getConfluenceTitle() {
-		return confluenceTitle;
-	}
+    public String getConfluenceTitle() {
+        return confluenceTitle;
+    }
 
-	public void setConfluenceTitle(String confluenceTitle) {
-		this.confluenceTitle = confluenceTitle;
-	}
+    public void setConfluenceTitle(String confluenceTitle) {
+        this.confluenceTitle = confluenceTitle;
+    }
 
-	public boolean exists() {
-		return exists;
-	}
+    public boolean exists() {
+        return exists;
+    }
 
-	public void setExists(Boolean exists) {
-		this.exists = exists;
-	}
+    public void setExists(Boolean exists) {
+        this.exists = exists;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getOriginalTitle() {
-		return originalTitle;
-	}
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
 
-	public void setOriginalTitle(String originalTitle) {
-		this.originalTitle = originalTitle;
-	}
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
 
-	public PageType getPageType() {
-		return pageType;
-	}
+    public PageType getPageType() {
+        return pageType;
+    }
 
-	public void setPageType(PageType pageType) {
-		this.pageType = pageType;
-	}
+    public void setPageType(PageType pageType) {
+        this.pageType = pageType;
+    }
 
-	public Integer getVersion() {
-		return version;
-	}
+    public Integer getVersion() {
+        return version;
+    }
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-	public String getXhtml() {
-		return xhtml;
-	}
+    public String getXhtml() {
+        return xhtml;
+    }
 
-	public void setXhtml(String xhtml) {
-		this.xhtml = xhtml;
-	}
+    public void setXhtml(String xhtml) {
+        this.xhtml = xhtml;
+    }
 
 }

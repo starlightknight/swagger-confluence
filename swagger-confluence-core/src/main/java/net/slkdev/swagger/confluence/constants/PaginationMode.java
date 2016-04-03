@@ -16,5 +16,5 @@
 package net.slkdev.swagger.confluence.constants;
 
 public enum PaginationMode {
-	SINGLE_PAGE, CATEGORY_PAGES, INDIVIDUAL_PAGES
+    SINGLE_PAGE, CATEGORY_PAGES, INDIVIDUAL_PAGES
 }

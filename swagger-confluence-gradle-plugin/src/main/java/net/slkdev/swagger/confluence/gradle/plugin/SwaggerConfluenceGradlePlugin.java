@@ -26,12 +26,12 @@ public class SwaggerConfluenceGradlePlugin implements Plugin<Project> {
 
     @Override
     public void apply(final Project project) {
-	    project.getExtensions().create("swaggerConfluence", SwaggerConfluenceConfig.class);
+        project.getExtensions().create("swaggerConfluence", SwaggerConfluenceConfig.class);
 
-	    final Map<String, Object> options = new HashMap<>();
-	    options.put("type", SwaggerConfluenceGradleTask.class);
+        final Map<String, Object> options = new HashMap<>();
+        options.put("type", SwaggerConfluenceGradleTask.class);
 
-	    project.task(options, "swaggerConfluence");
+        project.task(options, "swaggerConfluence");
     }
 
 }

@@ -28,48 +28,48 @@ import static org.apache.commons.lang3.Validate.notNull;
 
 public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SwaggerToConfluenceServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SwaggerToConfluenceServiceImpl.class);
 
-	private final SwaggerToAsciiDocService swaggerToAsciiDocService;
-	private final AsciiDocToXHtmlService asciiDocToXHtmlService;
-	private final XHtmlToConfluenceService xHtmlToConfluenceService;
+    private final SwaggerToAsciiDocService swaggerToAsciiDocService;
+    private final AsciiDocToXHtmlService asciiDocToXHtmlService;
+    private final XHtmlToConfluenceService xHtmlToConfluenceService;
 
-	public SwaggerToConfluenceServiceImpl(final SwaggerToAsciiDocService swaggerToAsciiDocService,
-	                                      final AsciiDocToXHtmlService asciiDocToXHtmlService,
-	                                      final XHtmlToConfluenceService xHtmlToConfluenceService){
-		this.swaggerToAsciiDocService = swaggerToAsciiDocService;
-		this.asciiDocToXHtmlService = asciiDocToXHtmlService;
-		this.xHtmlToConfluenceService = xHtmlToConfluenceService;
-	}
+    public SwaggerToConfluenceServiceImpl(final SwaggerToAsciiDocService swaggerToAsciiDocService,
+                                          final AsciiDocToXHtmlService asciiDocToXHtmlService,
+                                          final XHtmlToConfluenceService xHtmlToConfluenceService) {
+        this.swaggerToAsciiDocService = swaggerToAsciiDocService;
+        this.asciiDocToXHtmlService = asciiDocToXHtmlService;
+        this.xHtmlToConfluenceService = xHtmlToConfluenceService;
+    }
 
-	public void convertSwaggerToConfluence(final SwaggerConfluenceConfig swaggerConfluenceConfig){
-		final String swaggerSchema = swaggerConfluenceConfig.getSwaggerSchema();
-		final String confluenceRestApiUrl = swaggerConfluenceConfig.getConfluenceRestApiUrl();
-		final String spaceKey = swaggerConfluenceConfig.getSpaceKey();
-		final String prefix = swaggerConfluenceConfig.getPrefix();
-		final PaginationMode paginationMode = swaggerConfluenceConfig.getPaginationMode();
+    @Override
+    public void convertSwaggerToConfluence(final SwaggerConfluenceConfig swaggerConfluenceConfig) {
+        final String swaggerSchema = swaggerConfluenceConfig.getSwaggerSchema();
+        final String confluenceRestApiUrl = swaggerConfluenceConfig.getConfluenceRestApiUrl();
+        final String spaceKey = swaggerConfluenceConfig.getSpaceKey();
+        final String prefix = swaggerConfluenceConfig.getPrefix();
+        final PaginationMode paginationMode = swaggerConfluenceConfig.getPaginationMode();
 
-		notNull("Swagger Schema Cannot Be Null!", swaggerSchema);
-		notNull("Confluence REST API URL Cannot Be Null!", confluenceRestApiUrl);
-		notNull("Confluence Authentication Cannot Be Null!", swaggerConfluenceConfig.getAuthentication());
-		notNull("Confluence Space Key Cannot Be Null!", spaceKey);
+        notNull("Swagger Schema Cannot Be Null!", swaggerSchema);
+        notNull("Confluence REST API URL Cannot Be Null!", confluenceRestApiUrl);
+        notNull("Confluence Authentication Cannot Be Null!", swaggerConfluenceConfig.getAuthentication());
+        notNull("Confluence Space Key Cannot Be Null!", spaceKey);
 
-		LOG.info("Publishing Swagger API Documentation to Confluence...");
-		LOG.info("Swagger Schema: {}", swaggerSchema);
-		LOG.info("Confluence REST API URL: {}", confluenceRestApiUrl);
-		LOG.info("Confluence Space Key: {}", spaceKey);
-		LOG.info("Confluence PaginationMode: {}", paginationMode);
+        LOG.info("Publishing Swagger API Documentation to Confluence...");
+        LOG.info("Swagger Schema: {}", swaggerSchema);
+        LOG.info("Confluence REST API URL: {}", confluenceRestApiUrl);
+        LOG.info("Confluence Space Key: {}", spaceKey);
+        LOG.info("Confluence PaginationMode: {}", paginationMode);
 
-		if(prefix == null){
-			LOG.info("Confluence Title Prefix: No Prefix Supplied");
-		}
-		else {
-			LOG.info("Confluence Title Prefix: {}", prefix);
-		}
+        if (prefix == null) {
+            LOG.info("Confluence Title Prefix: No Prefix Supplied");
+        } else {
+            LOG.info("Confluence Title Prefix: {}", prefix);
+        }
 
-		final String asciiDoc = swaggerToAsciiDocService.convertSwaggerToAsciiDoc(swaggerSchema);
-		final String xhtml = asciiDocToXHtmlService.convertAsciiDocToXHtml(asciiDoc);
-		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
-	}
-	
+        final String asciiDoc = swaggerToAsciiDocService.convertSwaggerToAsciiDoc(swaggerSchema);
+        final String xhtml = asciiDocToXHtmlService.convertAsciiDocToXHtml(asciiDoc);
+        xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
+    }
+
 }

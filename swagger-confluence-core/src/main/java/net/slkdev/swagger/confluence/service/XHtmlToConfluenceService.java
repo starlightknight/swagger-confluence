@@ -18,5 +18,5 @@ package net.slkdev.swagger.confluence.service;
 import net.slkdev.swagger.confluence.config.SwaggerConfluenceConfig;
 
 public interface XHtmlToConfluenceService {
-	void postXHtmlToConfluence(final SwaggerConfluenceConfig swaggerConfluenceConfig, final String xhtml);
+    void postXHtmlToConfluence(final SwaggerConfluenceConfig swaggerConfluenceConfig, final String xhtml);
 }

@@ -16,5 +16,5 @@
 package net.slkdev.swagger.confluence.service;
 
 public interface AsciiDocToXHtmlService {
-	String convertAsciiDocToXHtml(String asciiDoc);
+    String convertAsciiDocToXHtml(String asciiDoc);
 }

@@ -30,30 +30,30 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class SwaggerConfluenceContextConfig {
 
-	@Bean
-	public SwaggerToAsciiDocService swaggerToAsciiDocServiceImpl(){
-		return new SwaggerToAsciiDocServiceImpl();
-	}
+    @Bean
+    public SwaggerToAsciiDocService swaggerToAsciiDocServiceImpl() {
+        return new SwaggerToAsciiDocServiceImpl();
+    }
 
-	@Bean
-    public AsciiDocToXHtmlService asciiDocToXHtmlServiceImpl(){
+    @Bean
+    public AsciiDocToXHtmlService asciiDocToXHtmlServiceImpl() {
         return new AsciiDocToXHtmlServiceImpl();
     }
 
-	@Bean
-	public RestTemplate restTemplate(){
-		return new RestTemplate();
-	}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
-	@Bean
-    public XHtmlToConfluenceService xHtmlToConfluenceServiceImpl(){
+    @Bean
+    public XHtmlToConfluenceService xHtmlToConfluenceServiceImpl() {
         return new XHtmlToConfluenceServiceImpl(restTemplate());
     }
 
-	@Bean
-	public SwaggerToConfluenceService swaggerToConfluenceServiceImpl(){
-		return new SwaggerToConfluenceServiceImpl(swaggerToAsciiDocServiceImpl(),
-				asciiDocToXHtmlServiceImpl(), xHtmlToConfluenceServiceImpl());
-	}
+    @Bean
+    public SwaggerToConfluenceService swaggerToConfluenceServiceImpl() {
+        return new SwaggerToConfluenceServiceImpl(swaggerToAsciiDocServiceImpl(),
+                asciiDocToXHtmlServiceImpl(), xHtmlToConfluenceServiceImpl());
+    }
 
 }

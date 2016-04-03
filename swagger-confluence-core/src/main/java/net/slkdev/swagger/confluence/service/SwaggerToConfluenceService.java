@@ -18,5 +18,5 @@ package net.slkdev.swagger.confluence.service;
 import net.slkdev.swagger.confluence.config.SwaggerConfluenceConfig;
 
 public interface SwaggerToConfluenceService {
-	void convertSwaggerToConfluence(SwaggerConfluenceConfig swaggerConfluenceConfig);
+    void convertSwaggerToConfluence(SwaggerConfluenceConfig swaggerConfluenceConfig);
 }

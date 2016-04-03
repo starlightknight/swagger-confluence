@@ -18,41 +18,41 @@ package net.slkdev.swagger.confluence.model;
 import net.slkdev.swagger.confluence.constants.PageType;
 
 public class ConfluenceLink {
-	private PageType pageType;
-	private String originalHref;
-	private String confluenceLinkMarkup;
-	private String text;
+    private PageType pageType;
+    private String originalHref;
+    private String confluenceLinkMarkup;
+    private String text;
 
-	public PageType getPageType() {
-		return pageType;
-	}
+    public PageType getPageType() {
+        return pageType;
+    }
 
-	public void setPageType(PageType pageType) {
-		this.pageType = pageType;
-	}
+    public void setPageType(PageType pageType) {
+        this.pageType = pageType;
+    }
 
-	public String getOriginalHref() {
-		return originalHref;
-	}
+    public String getOriginalHref() {
+        return originalHref;
+    }
 
-	public void setOriginalHref(String originalHref) {
-		this.originalHref = originalHref;
-	}
+    public void setOriginalHref(String originalHref) {
+        this.originalHref = originalHref;
+    }
 
-	public String getConfluenceLinkMarkup() {
-		return confluenceLinkMarkup;
-	}
+    public String getConfluenceLinkMarkup() {
+        return confluenceLinkMarkup;
+    }
 
-	public void setConfluenceLinkMarkup(String confluenceLinkMarkup) {
-		this.confluenceLinkMarkup = confluenceLinkMarkup;
-	}
+    public void setConfluenceLinkMarkup(String confluenceLinkMarkup) {
+        this.confluenceLinkMarkup = confluenceLinkMarkup;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
 }

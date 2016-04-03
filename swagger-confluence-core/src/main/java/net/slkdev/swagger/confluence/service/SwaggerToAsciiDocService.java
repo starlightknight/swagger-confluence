@@ -16,5 +16,5 @@
 package net.slkdev.swagger.confluence.service;
 
 public interface SwaggerToAsciiDocService {
-	String convertSwaggerToAsciiDoc(String swaggerSchemaPath);
+    String convertSwaggerToAsciiDoc(String swaggerSchemaPath);
 }
