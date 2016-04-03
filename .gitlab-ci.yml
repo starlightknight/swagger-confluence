@@ -18,7 +18,7 @@ cache:
 job_build_develop:
   stage: build
   script:
-    - ./gradlew clean build
+    - ./gradlew clean build shadowJar
   only:
     - develop
   tags:
@@ -27,7 +27,7 @@ job_build_develop:
 job_build_master:
   stage: build
   script:
-    - ./gradlew clean build -Prelease=true
+    - ./gradlew clean build shadowJar -Prelease=true
   only:
     - master
   tags:
@@ -50,6 +50,7 @@ job_publish_develop:
     - ./gradlew publish
   artifacts:
     paths:
+    - swagger-confluence-cli/build/libs/*.jar
     - swagger-confluence-core/build/libs/*.jar
     - swagger-confluence-gradle-plugin/build/libs/*.jar
   tags:
@@ -63,6 +64,7 @@ job_publish_master:
     - ./gradlew publish -Prelease=true
   artifacts:
     paths:
+    - swagger-confluence-cli/build/libs/*.jar
     - swagger-confluence-core/build/libs/*.jar
     - swagger-confluence-gradle-plugin/build/libs/*.jar
   tags:
