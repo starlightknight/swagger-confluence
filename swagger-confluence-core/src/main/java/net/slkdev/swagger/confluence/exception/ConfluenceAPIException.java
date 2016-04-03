@@ -17,26 +17,8 @@ package net.slkdev.swagger.confluence.exception;
 
 public class ConfluenceAPIException extends RuntimeException {
 
-    public ConfluenceAPIException() {
-        super();
-    }
-
-    public ConfluenceAPIException(String message) {
-        super(message);
-    }
-
     public ConfluenceAPIException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ConfluenceAPIException(Throwable cause) {
-        super(cause);
-    }
-
-    protected ConfluenceAPIException(String message, Throwable cause,
-                               boolean enableSuppression,
-                               boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-    
 }

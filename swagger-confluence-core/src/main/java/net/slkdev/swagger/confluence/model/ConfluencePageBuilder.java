@@ -74,10 +74,6 @@ public class ConfluencePageBuilder {
         return this;
     }
 
-    public ConfluencePageBuilder but() {
-        return aConfluencePage().withAncestorId(ancestorId).withConfluenceTitle(confluenceTitle).withExists(exists).withId(id).withOriginalTitle(originalTitle).withPageType(pageType).withVersion(version).withXhtml(xhtml);
-    }
-
     public ConfluencePage build() {
         ConfluencePage confluencePage = new ConfluencePage();
         confluencePage.setAncestorId(ancestorId);

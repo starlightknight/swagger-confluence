@@ -395,7 +395,8 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         final String jsonBody = responseEntity.getBody();
 
         try {
-            LOG.debug("GET RESPONSE: " + jsonBody);
+            LOG.debug("GET RESPONSE: {}", jsonBody);
+
             final String id = JsonPath.read(jsonBody, "$.results[0].id");
             final Integer version = JsonPath.read(jsonBody, "$.results[0].version.number");
 

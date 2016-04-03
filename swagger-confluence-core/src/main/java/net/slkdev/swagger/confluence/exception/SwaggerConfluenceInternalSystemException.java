@@ -17,26 +17,8 @@ package net.slkdev.swagger.confluence.exception;
 
 public class SwaggerConfluenceInternalSystemException extends RuntimeException {
 
-    public SwaggerConfluenceInternalSystemException() {
-        super();
-    }
-
-    public SwaggerConfluenceInternalSystemException(String message) {
-        super(message);
-    }
-
     public SwaggerConfluenceInternalSystemException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    public SwaggerConfluenceInternalSystemException(Throwable cause) {
-        super(cause);
-    }
-
-    protected SwaggerConfluenceInternalSystemException(String message, Throwable cause,
-                                               boolean enableSuppression,
-                                               boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }

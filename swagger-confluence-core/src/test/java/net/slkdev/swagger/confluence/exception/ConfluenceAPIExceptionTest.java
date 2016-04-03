@@ -15,14 +15,24 @@
  */
 package net.slkdev.swagger.confluence.exception;
 
-public class SwaggerConfluenceConfigurationException extends RuntimeException {
+import org.junit.Test;
 
-    public SwaggerConfluenceConfigurationException(String message) {
-        super(message);
-    }
+import static org.junit.Assert.assertEquals;
 
-    public SwaggerConfluenceConfigurationException(String message, Throwable cause) {
-        super(message, cause);
+public class ConfluenceAPIExceptionTest {
+
+    @Test
+    public void testConfluenceAPIException(){
+        final String message = "message";
+        final Throwable cause = new Exception();
+
+        final ConfluenceAPIException confluenceAPIException =
+                new ConfluenceAPIException(message, cause);
+
+        assertEquals("Expected Message Doesn't Match", message,
+                confluenceAPIException.getMessage());
+        assertEquals("Expected Cause Doesn't Match", cause,
+                confluenceAPIException.getCause());
     }
 
 }

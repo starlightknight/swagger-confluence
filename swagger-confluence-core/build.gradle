@@ -48,6 +48,7 @@ dependencies {
 
     testCompile "junit:junit:$JUNIT_VERSION"
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile "org.springframework:spring-test:$SPRING_VERSION"
 }
 
 publishing {

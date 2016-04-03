@@ -50,10 +50,6 @@ public class ConfluenceLinkBuilder {
         return this;
     }
 
-    public ConfluenceLinkBuilder but() {
-        return aConfluenceLink().withPageType(pageType).withOriginalHref(originalHref).withConfluenceLinkMarkup(confluenceLinkMarkup).withText(text);
-    }
-
     public ConfluenceLink build() {
         ConfluenceLink confluenceLink = new ConfluenceLink();
         confluenceLink.setPageType(pageType);
