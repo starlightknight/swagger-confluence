@@ -78,7 +78,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         for (final ConfluencePage confluencePage : confluencePages) {
             final PageType pageType = confluencePage.getPageType();
 
-            LOG.info("PROCESSING PAGE: {} --> {}", confluencePage.getPageType(), confluencePage.getXhtml());
+            LOG.debug("PROCESSING PAGE: {} --> {}", confluencePage.getPageType(), confluencePage.getXhtml());
 
             switch (pageType) {
                 case ROOT:
@@ -97,10 +97,8 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             addExistingPageData(confluencePage);
 
             if (confluencePage.exists()) {
-                LOG.info("Page {} Already Exists, Performing an Update!", confluencePage.getId());
                 updatePage(confluencePage, titleLinkMap);
             } else {
-                LOG.info("Page Does Not Exist, Creating a New Page!");
                 createPage(confluencePage, titleLinkMap);
             }
 
@@ -225,7 +223,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                     .withConfluenceLinkMarkup(confluenceLinkMarkup)
                     .build();
 
-            LOG.info("LINK MAP: {} -> {}", originalTarget, confluenceLinkMarkup);
+            LOG.debug("LINK MAP: {} -> {}", originalTarget, confluenceLinkMarkup);
 
             confluenceLinkMap.put(originalTarget, confluenceLink);
 
@@ -242,7 +240,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         return originalDocument;
     }
 
-    private List<ConfluencePage> handlePagination() {
+    private static List<ConfluencePage> handlePagination() {
         final List<ConfluencePage> confluencePages = new ArrayList<>();
         final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
 
@@ -397,7 +395,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         final String jsonBody = responseEntity.getBody();
 
         try {
-            LOG.info("GET RESPONSE: " + jsonBody);
+            LOG.debug("GET RESPONSE: " + jsonBody);
             final String id = JsonPath.read(jsonBody, "$.results[0].id");
             final Integer version = JsonPath.read(jsonBody, "$.results[0].version.number");
 
@@ -407,15 +405,20 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
                 final Map<String, Object> lastAncestor = (Map<String, Object>) ancestors.get(ancestors.size() - 1);
                 final Integer ancestorId = Integer.valueOf((String) lastAncestor.get("id"));
 
-                LOG.info("ANCESTORS: {} : {}, CHOSE -> {}", ancestors.getClass().getName(), ancestors, ancestorId);
+                LOG.debug("ANCESTORS: {} : {}, CHOSE -> {}", ancestors.getClass().getName(), ancestors, ancestorId);
                 confluencePage.setAncestorId(ancestorId);
             }
 
             confluencePage.setId(id);
             confluencePage.setVersion(version);
             confluencePage.setExists(true);
+
+            LOG.info("Page {} Already Exists, Performing an Update!", confluencePage.getId());
+
         } catch (final PathNotFoundException e) {
             confluencePage.setExists(false);
+
+            LOG.info("Page Does Not Exist, Creating a New Page!");
 
             // Prevent New Pages from Being Orphaned if there was no ancestor id
             // specified by querying for the id of the space root. Confluence
@@ -470,14 +473,14 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         final String formattedXHtml = reformatXHtml(page.getXhtml(), confluenceLinkMap);
         final String jsonPostBody = buildPostBody(page.getAncestorId(), page.getConfluenceTitle(), formattedXHtml).toJSONString();
 
-        LOG.info("CREATE PAGE REQUEST: {}", jsonPostBody);
+        LOG.debug("CREATE PAGE REQUEST: {}", jsonPostBody);
 
         final HttpEntity<String> requestEntity = new HttpEntity<>(jsonPostBody, httpHeaders);
 
         final HttpEntity<String> responseEntity = restTemplate.exchange(targetUrl,
                 HttpMethod.POST, requestEntity, String.class);
 
-        LOG.info("CREATE PAGE RESPONSE: {}", responseEntity.getBody());
+        LOG.debug("CREATE PAGE RESPONSE: {}", responseEntity.getBody());
 
         final Integer pageId = getPageIdFromResponse(responseEntity);
         page.setAncestorId(pageId);
@@ -503,11 +506,11 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final HttpEntity<String> requestEntity = new HttpEntity<>(postBody.toJSONString(), httpHeaders);
 
-        LOG.info("UPDATE PAGE REQUEST: {}", postBody);
+        LOG.debug("UPDATE PAGE REQUEST: {}", postBody);
 
         final HttpEntity<String> responseEntity = restTemplate.exchange(targetUrl, HttpMethod.PUT, requestEntity, String.class);
 
-        LOG.info("UPDATE PAGE RESPONSE: {}", responseEntity.getBody());
+        LOG.debug("UPDATE PAGE RESPONSE: {}", responseEntity.getBody());
     }
 
     private static JSONObject buildPostBody(final Integer ancestorId, final String confluenceTitle, final String xhtml) {
@@ -556,13 +559,13 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             final ConfluenceLink confluenceLink = confluenceLinkMap.get(originalHref);
 
             if (confluenceLink == null) {
-                LOG.info("NO LINK MAPPING FOUND TO COVERT LINK: {}", originalHref);
+                LOG.debug("NO LINK MAPPING FOUND TO COVERT LINK: {}", originalHref);
                 continue;
             }
 
             final String confluenceLinkMarkup = confluenceLink.getConfluenceLinkMarkup();
 
-            LOG.info("LINK CONVERSION: {} -> {}", originalHref, confluenceLinkMarkup);
+            LOG.debug("LINK CONVERSION: {} -> {}", originalHref, confluenceLinkMarkup);
 
             linkElement.before(confluenceLinkMarkup);
 

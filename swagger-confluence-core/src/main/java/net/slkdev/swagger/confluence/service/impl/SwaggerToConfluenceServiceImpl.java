@@ -67,6 +67,9 @@ public class SwaggerToConfluenceServiceImpl implements SwaggerToConfluenceServic
             LOG.info("Confluence Title Prefix: {}", prefix);
         }
 
+        LOG.info("Confluence Generate Numeric Prefixes: {}",
+                swaggerConfluenceConfig.isGenerateNumericPrefixes());
+
         final String asciiDoc = swaggerToAsciiDocService.convertSwaggerToAsciiDoc(swaggerSchema);
         final String xhtml = asciiDocToXHtmlService.convertAsciiDocToXHtml(asciiDoc);
         xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
