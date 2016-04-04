@@ -491,7 +491,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         return headers;
     }
 
-    private Integer getPageIdFromResponse(final HttpEntity<String> responseEntity) {
+    private static Integer getPageIdFromResponse(final HttpEntity<String> responseEntity) {
         final String responseJson = responseEntity.getBody();
         final JSONParser jsonParser = new JSONParser(DEFAULT_PERMISSIVE_MODE);
 

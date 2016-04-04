@@ -62,7 +62,7 @@ public class SwaggerToAsciiDocServiceImpl implements SwaggerToAsciiDocService {
         return swaggerAsciiDoc;
     }
 
-    private File getSchemaFile(final String swaggerSchemaPath) throws FileNotFoundException, URISyntaxException {
+    private static File getSchemaFile(final String swaggerSchemaPath) throws FileNotFoundException, URISyntaxException {
         // First we'll try to find the file directly
         File swaggerFile = new File(swaggerSchemaPath);
 

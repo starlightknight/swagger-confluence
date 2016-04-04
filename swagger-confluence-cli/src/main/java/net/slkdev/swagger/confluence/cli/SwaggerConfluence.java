@@ -42,10 +42,14 @@ public class SwaggerConfluence {
     private static SwaggerToConfluenceService bootSwaggerConfluence(){
         final AnnotationConfigApplicationContext annotationConfigApplicationContext =
                 new AnnotationConfigApplicationContext(SwaggerConfluenceContextConfig.class);
-        return annotationConfigApplicationContext.getBean(SwaggerToConfluenceService.class);
+        final SwaggerToConfluenceService swaggerToConfluenceService =
+                annotationConfigApplicationContext.getBean(SwaggerToConfluenceService.class);
+        annotationConfigApplicationContext.close();
+
+        return swaggerToConfluenceService;
     }
 
-    public void runCLI(final String args[]){
+    public void runCLI(final String[] args){
         final Options options = buildOptions();
         final CommandLine commandLine = parseCommandLineOptions(options, args);
 
