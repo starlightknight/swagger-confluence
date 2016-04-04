@@ -19,6 +19,7 @@ import net.slkdev.swagger.confluence.service.AsciiDocToXHtmlService;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.AttributesBuilder;
 import org.asciidoctor.OptionsBuilder;
+import org.asciidoctor.Placement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,25 +29,27 @@ import static org.asciidoctor.Asciidoctor.Factory.create;
 
 public class AsciiDocToXHtmlServiceImpl implements AsciiDocToXHtmlService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AsciiDocToXHtmlServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AsciiDocToXHtmlServiceImpl.class);
 
-	public String convertAsciiDocToXHtml(final String asciiDoc){
-		LOG.info("Converting AsciiDoc to XHTML5...");
+    @Override
+    public String convertAsciiDocToXHtml(final String asciiDoc) {
+        LOG.info("Converting AsciiDoc to XHTML5...");
 
-		final Asciidoctor asciidoctor = create();
+        final Asciidoctor asciidoctor = create();
 
-		final Map<String, Object> attributes = AttributesBuilder.attributes()
-				.unsetStyleSheet()
-				.asMap();
+        final Map<String, Object> attributes = AttributesBuilder.attributes()
+                .unsetStyleSheet()
+                .tableOfContents(Placement.TOP)
+                .asMap();
 
-		final Map<String, Object> options = OptionsBuilder.options()
-				.attributes(attributes)
-				.backend("xhtml5")
-				.asMap();
+        final Map<String, Object> options = OptionsBuilder.options()
+                .attributes(attributes)
+                .backend("xhtml5")
+                .asMap();
 
-		LOG.info("XHTML5 Conversion Complete!");
+        LOG.info("XHTML5 Conversion Complete!");
 
-		return asciidoctor.render(asciiDoc, options);
-	}
+        return asciidoctor.render(asciiDoc, options);
+    }
 
 }

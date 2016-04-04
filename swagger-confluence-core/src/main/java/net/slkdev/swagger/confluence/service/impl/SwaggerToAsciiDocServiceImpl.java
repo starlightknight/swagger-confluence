@@ -17,6 +17,8 @@ package net.slkdev.swagger.confluence.service.impl;
 
 import io.github.robwin.markup.builder.MarkupLanguage;
 import io.github.robwin.swagger2markup.Swagger2MarkupConverter;
+import net.slkdev.swagger.confluence.exception.SwaggerConfluenceConfigurationException;
+import net.slkdev.swagger.confluence.exception.SwaggerConfluenceInternalSystemException;
 import net.slkdev.swagger.confluence.service.SwaggerToAsciiDocService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,60 +31,59 @@ import java.net.URL;
 
 public class SwaggerToAsciiDocServiceImpl implements SwaggerToAsciiDocService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SwaggerToAsciiDocServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SwaggerToAsciiDocServiceImpl.class);
 
-	public String convertSwaggerToAsciiDoc(final String swaggerSchemaPath) {
-		final File swaggerSchemaFile;
+    @Override
+    public String convertSwaggerToAsciiDoc(final String swaggerSchemaPath) {
+        final File swaggerSchemaFile;
 
-		LOG.info("Converting Swagger Schema to Ascii Doc...");
+        LOG.info("Converting Swagger Schema to Ascii Doc...");
 
-		try {
-			swaggerSchemaFile = getSchemaFile(swaggerSchemaPath);
-		}
-		catch(final FileNotFoundException | URISyntaxException e){
-			throw new RuntimeException("Error Locating Swagger Schema", e);
-		}
+        try {
+            swaggerSchemaFile = getSchemaFile(swaggerSchemaPath);
+        } catch (final FileNotFoundException | URISyntaxException e) {
+            throw new SwaggerConfluenceConfigurationException("Error Locating Swagger Schema", e);
+        }
 
-		final String swaggerAsciiDoc;
+        final String swaggerAsciiDoc;
 
-		try {
-			swaggerAsciiDoc = Swagger2MarkupConverter.from(swaggerSchemaFile.getAbsolutePath())
-					.withMarkupLanguage(MarkupLanguage.ASCIIDOC)
-					.build()
-					.asString();
-		}
-		catch(IOException e){
-			throw new RuntimeException("Error Converting Swagger Schema to AsciiDoc", e);
-		}
+        try {
+            swaggerAsciiDoc = Swagger2MarkupConverter.from(swaggerSchemaFile.getAbsolutePath())
+                    .withMarkupLanguage(MarkupLanguage.ASCIIDOC)
+                    .build()
+                    .asString();
+        } catch (IOException e) {
+            throw new SwaggerConfluenceInternalSystemException(
+                    "Error Converting Swagger Schema to AsciiDoc", e);
+        }
 
-		LOG.info("AsciiDoc Conversion Complete!");
+        LOG.info("AsciiDoc Conversion Complete!");
 
-		return swaggerAsciiDoc;
-	}
+        return swaggerAsciiDoc;
+    }
 
-	private File getSchemaFile(final String swaggerSchemaPath) throws FileNotFoundException, URISyntaxException {
-		// First we'll try to find the file directly
-		File swaggerFile = new File(swaggerSchemaPath);
+    private File getSchemaFile(final String swaggerSchemaPath) throws FileNotFoundException, URISyntaxException {
+        // First we'll try to find the file directly
+        File swaggerFile = new File(swaggerSchemaPath);
 
-		// If we can't find it, we'll check the classpath
-		if(!swaggerFile.exists()){
-			final URL swaggerSchemaURL = SwaggerToAsciiDocServiceImpl.class.getResource(swaggerSchemaPath);
+        // If we can't find it, we'll check the classpath
+        if (!swaggerFile.exists()) {
+            final URL swaggerSchemaURL = SwaggerToAsciiDocServiceImpl.class.getResource(swaggerSchemaPath);
 
-			if(swaggerSchemaURL == null) {
-				swaggerFile = null;
-			}
-			else {
-				swaggerFile = new File(swaggerSchemaURL.toURI());
-			}
-		}
+            if (swaggerSchemaURL == null) {
+                swaggerFile = null;
+            } else {
+                swaggerFile = new File(swaggerSchemaURL.toURI());
+            }
+        }
 
-		if(swaggerFile == null || !swaggerFile.exists() || !swaggerFile.canRead()){
-			throw new FileNotFoundException(
-					String.format("Unable to Locate Swagger Schema at Path <%s>",
-							swaggerSchemaPath));
-		}
+        if (swaggerFile == null || !swaggerFile.exists() || !swaggerFile.canRead()) {
+            throw new FileNotFoundException(
+                    String.format("Unable to Locate Swagger Schema at Path <%s>",
+                            swaggerSchemaPath));
+        }
 
-		return swaggerFile;
-	}
+        return swaggerFile;
+    }
 
 }

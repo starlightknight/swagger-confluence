@@ -9,7 +9,6 @@ buildscript {
     }
     dependencies {
         classpath 'org.apache.maven:maven-model:3.3.9'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
     }
@@ -17,7 +16,6 @@ buildscript {
 
 apply plugin: 'com.jfrog.bintray'
 apply plugin: "com.gradle.plugin-publish"
-apply plugin: 'org.sonarqube'
 
 bintray {
     user = "$System.env.BINTRAY_USER"
@@ -25,7 +23,7 @@ bintray {
     publications = ['myPublication']
     pkg {
         version {
-            name = '1.0-RELEASE'
+            name = project.version
         }
         repo = "$System.env.BINTRAY_REPO"
         name = 'swagger-confluence-gradle-plugin'
@@ -35,15 +33,6 @@ bintray {
         websiteUrl = 'https://cloud.slkdev.net/swagger-confluence'
         issueTrackerUrl = 'https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence/issues'
         labels = ['swagger','confluence']
-    }
-}
-
-sonarqube {
-    properties {
-        property "sonar.host.url", "$System.env.SONAR_URL"
-        property "sonar.login", "$System.env.SONAR_USER"
-        property "sonar.password", "$System.env.SONAR_PASS"
-        property "sonar.sourceEncoding", "UTF-8"
     }
 }
 

@@ -15,19 +15,19 @@ cache:
      - .gradle/wrapper
      - .gradle/caches
 
-job_build_develop:
+job_build:
   stage: build
   script:
-    - ./gradlew clean build
-  only:
-    - develop
+    - ./gradlew clean build shadowJar
+  except:
+    - maseter
   tags:
     - docker
 
 job_build_master:
   stage: build
   script:
-    - ./gradlew clean build -Prelease=true
+    - ./gradlew clean build shadowJar -Prelease=true
   only:
     - master
   tags:
@@ -36,9 +36,19 @@ job_build_master:
 job_analyze_develop:
   stage: analyze
   script:
-    - ./gradlew jacocoTestReport sonarqube
+    - ./gradlew jacocoTestReport sonarqube -Dsonar.issuesReport.console.enable=true -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref=$CI_BUILD_REF_NAME
   only:
     - develop
+  tags:
+    - docker
+
+job_analyze_pull:
+  stage: analyze
+  script:
+    - ./gradlew jacocoTestReport sonarqube -Dsonar.analysis.mode=preview -Dsonar.issuesReport.console.enable=true -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref=$CI_BUILD_REF_NAME
+  except:
+    - develop
+    - master
   tags:
     - docker
 
@@ -50,6 +60,7 @@ job_publish_develop:
     - ./gradlew publish
   artifacts:
     paths:
+    - swagger-confluence-cli/build/libs/*.jar
     - swagger-confluence-core/build/libs/*.jar
     - swagger-confluence-gradle-plugin/build/libs/*.jar
   tags:
@@ -63,6 +74,7 @@ job_publish_master:
     - ./gradlew publish -Prelease=true
   artifacts:
     paths:
+    - swagger-confluence-cli/build/libs/*.jar
     - swagger-confluence-core/build/libs/*.jar
     - swagger-confluence-gradle-plugin/build/libs/*.jar
   tags:

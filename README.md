@@ -16,21 +16,40 @@ This project uses the following flow to publish to Confluence:
 
 Your Swagger Schema -> Swagger2Markup -> AsciiDoctorJ -> XHTML -> Confluence REST API
 
+
+
 This project requires the use of Java 7 or later.
 
-## Documentation & Usage
+## Components
+
+The project is current broken into three components
+
+- **swagger-confluence-core:** a core shared library to handle converting and publishing the swagger schema to confluence. This shared library should be reusable by other projects
+- **swagger-confluence-gradle-plugin:** a gradle plugin to provide seamless conversion and publishing
+- **swagger-confluence-cli:** a command line executor for publishing to swagger docs to confluence
+
+## Documentation & Usage Guide
 
 You can view the documentation and usage guide [here](https://cloud.slkdev.net/swagger-confluence)
+
+## Live Demo
+
+You can view a live demo of Swagger Confluence [here on my Confluence Server](https://cloud.slkdev.net/confluence/display/DEMO/Swagger+Confluence+Demos)
 
 ## Contributing
 
 ### Community contributions
 
-
-Pull requests are welcome. Please submit via my [GitLab Instance](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence)
-
+Pull requests are welcome. The primary source repository for this project is hosted on my [GitLab CE Instance](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence).
 
 
+It is preferred that if you wish to contribute, you submit there as this is where I have CI, SonarQube, etc set up. GitLab CE officially provides OmniAuth integration to make this easy, or you can of course sign up manually as well.
+
+
+GitLab CE is open source software. If you are unfamiliar with it, you can read more about it [here](https://about.gitlab.com/) on their official web site.
+
+
+If you are not comfortable with this, you may submit via the GitHub mirror, and I will merge it back manually.
 
 ### Questions, Bugs, or Enhacement Requests
 
@@ -47,6 +66,10 @@ If you believe you have found a bug in the project, please take a moment to sear
 If you would like an enhancement to be made to the Swagger Confluence, pull requests are welcome. Before beginning work on an enhancement, you may want to search the existing issues and pull requests to see if a similar enhancement is already being worked on. You may also want to open a new issue to discuss the enhancement.
 
 
+
+## Static Code Analysis + Coverage
+
+See [SonarQube](https://cloud.slkdev.net/sonar/overview?id=30) for this project
 
 ## Special Thanks
 
@@ -66,10 +89,8 @@ conjunction with the above projects and their respective gradle plugins before s
 * [asciidoctor-confluence](https://github.com/gscheibel/asciidoctor-confluence)
 * [asciidoc2confluence](https://github.com/rdmueller/asciidoc2confluence)
 
-The XHTML->Confluence REST API portion of this library was inspired by the
+The XHTML->Confluence REST API portion of this library was originally inspired by the
 asciidoc2confluence groovy script
-
-
 
 ## License
 

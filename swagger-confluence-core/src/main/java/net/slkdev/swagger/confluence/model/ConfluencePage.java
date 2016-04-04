@@ -15,34 +15,81 @@
  */
 package net.slkdev.swagger.confluence.model;
 
+import net.slkdev.swagger.confluence.constants.PageType;
+
 public class ConfluencePage {
 
-	private boolean exists;
-	private String id;
-	private Integer version;
+    private Integer ancestorId;
+    private String confluenceTitle;
+    private Boolean exists;
+    private String id;
+    private String originalTitle;
+    private PageType pageType;
+    private Integer version;
+    private String xhtml;
 
-	public boolean exists() {
-		return exists;
-	}
+    public Integer getAncestorId() {
+        return ancestorId;
+    }
 
-	public void setExists(boolean exists) {
-		this.exists = exists;
-	}
+    public void setAncestorId(Integer ancestorId) {
+        this.ancestorId = ancestorId;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getConfluenceTitle() {
+        return confluenceTitle;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setConfluenceTitle(String confluenceTitle) {
+        this.confluenceTitle = confluenceTitle;
+    }
 
-	public Integer getVersion() {
-		return version;
-	}
+    public Boolean exists() {
+        return exists;
+    }
 
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    public void setExists(Boolean exists) {
+        this.exists = exists;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public PageType getPageType() {
+        return pageType;
+    }
+
+    public void setPageType(PageType pageType) {
+        this.pageType = pageType;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public String getXhtml() {
+        return xhtml;
+    }
+
+    public void setXhtml(String xhtml) {
+        this.xhtml = xhtml;
+    }
 
 }

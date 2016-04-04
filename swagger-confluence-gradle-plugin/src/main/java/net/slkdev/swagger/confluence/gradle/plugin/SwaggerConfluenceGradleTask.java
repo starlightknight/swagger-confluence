@@ -25,14 +25,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class SwaggerConfluenceGradleTask extends DefaultTask {
 
     @TaskAction
-    public void swaggerConfluence(){
-	    final AnnotationConfigApplicationContext annotationConfigApplicationContext =
-			    new AnnotationConfigApplicationContext(SwaggerConfluenceContextConfig.class);
-	    final SwaggerToConfluenceService swaggerToConfluenceService =
-			    annotationConfigApplicationContext.getBean(SwaggerToConfluenceService.class);
-	    final SwaggerConfluenceConfig swaggerConfluenceConfig = getProject().getExtensions().findByType(SwaggerConfluenceConfig.class);
-	    swaggerToConfluenceService.convertSwaggerToConfluence(swaggerConfluenceConfig);
-	    annotationConfigApplicationContext.close();
+    public void swaggerConfluence() {
+        final AnnotationConfigApplicationContext annotationConfigApplicationContext =
+                new AnnotationConfigApplicationContext(SwaggerConfluenceContextConfig.class);
+        final SwaggerToConfluenceService swaggerToConfluenceService =
+                annotationConfigApplicationContext.getBean(SwaggerToConfluenceService.class);
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = getProject().getExtensions().findByType(SwaggerConfluenceConfig.class);
+        swaggerToConfluenceService.convertSwaggerToConfluence(swaggerConfluenceConfig);
+        annotationConfigApplicationContext.close();
     }
 
 }

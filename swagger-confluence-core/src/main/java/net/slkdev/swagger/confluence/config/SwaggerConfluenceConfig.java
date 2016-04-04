@@ -15,70 +15,128 @@
  */
 package net.slkdev.swagger.confluence.config;
 
+import net.slkdev.swagger.confluence.constants.PaginationMode;
+import net.slkdev.swagger.confluence.exception.SwaggerConfluenceConfigurationException;
+
 public class SwaggerConfluenceConfig {
 
-	private Integer ancestorId;
-	private String authentication;
-	private String confluenceRestApiUrl;
-	private String prefix;
-	private String spaceKey;
-	private String swaggerSchema;
-	private String title;
+    private Integer ancestorId;
+    private String authentication;
+    private String confluenceRestApiUrl;
+    private boolean generateNumericPrefixes;
+    private boolean includeTableOfContentsOnSinglePage;
+    private PaginationMode paginationMode;
+    private String prefix;
+    private String spaceKey;
+    private String swaggerSchema;
+    private String title;
 
-	public Integer getAncestorId() {
-		return ancestorId;
-	}
+    public SwaggerConfluenceConfig() {
+        generateNumericPrefixes = true;
+        includeTableOfContentsOnSinglePage = true;
+        paginationMode = PaginationMode.SINGLE_PAGE;
+    }
 
-	public void setAncestorId(Integer ancestorId) {
-		this.ancestorId = ancestorId;
-	}
+    public Integer getAncestorId() {
+        return ancestorId;
+    }
 
-	public String getAuthentication() {
-		return authentication;
-	}
+    public void setAncestorId(final Integer ancestorId) {
+        this.ancestorId = ancestorId;
+    }
 
-	public void setAuthentication(final String authentication) {
-		this.authentication = authentication;
-	}
+    public String getAuthentication() {
+        return authentication;
+    }
 
-	public String getConfluenceRestApiUrl() {
-		return confluenceRestApiUrl;
-	}
+    public void setAuthentication(final String authentication) {
+        this.authentication = authentication;
+    }
 
-	public void setConfluenceRestApiUrl(final String confluenceRestApiUrl) {
-		this.confluenceRestApiUrl = confluenceRestApiUrl;
-	}
+    public String getConfluenceRestApiUrl() {
+        return confluenceRestApiUrl;
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public void setConfluenceRestApiUrl(final String confluenceRestApiUrl) {
+        this.confluenceRestApiUrl = confluenceRestApiUrl;
+    }
 
-	public void setPrefix(final String prefix) {
-		this.prefix = prefix;
-	}
+    public boolean isGenerateNumericPrefixes() {
+        return generateNumericPrefixes;
+    }
 
-	public String getSpaceKey() {
-		return spaceKey;
-	}
+    public void setGenerateNumericPrefixes(final boolean generateNumericPrefixes) {
+        this.generateNumericPrefixes = generateNumericPrefixes;
+    }
 
-	public void setSpaceKey(final String spaceKey) {
-		this.spaceKey = spaceKey;
-	}
+    public boolean isIncludeTableOfContentsOnSinglePage() {
+        return includeTableOfContentsOnSinglePage;
+    }
 
-	public String getSwaggerSchema() {
-		return swaggerSchema;
-	}
+    public void setIncludeTableOfContentsOnSinglePage(final boolean includeTableOfContentsOnSinglePage) {
+        this.includeTableOfContentsOnSinglePage = includeTableOfContentsOnSinglePage;
+    }
 
-	public void setSwaggerSchema(final String swaggerSchema) {
-		this.swaggerSchema = swaggerSchema;
-	}
+    public PaginationMode getPaginationMode() {
+        return paginationMode;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setPaginationMode(final PaginationMode paginationMode) {
+        this.paginationMode = paginationMode;
+    }
 
-	public void setTitle(final String title) {
-		this.title = title;
-	}
+    public void setPaginationMode(final String paginationMode) {
+        switch (paginationMode) {
+            case "single":
+                this.paginationMode = PaginationMode.SINGLE_PAGE;
+                break;
+            case "category":
+                this.paginationMode = PaginationMode.CATEGORY_PAGES;
+                break;
+            case "individual":
+                this.paginationMode = PaginationMode.INDIVIDUAL_PAGES;
+                break;
+            default:
+                throw new SwaggerConfluenceConfigurationException(
+                        String.format("Invalid Pagination Mode <%s>", paginationMode)
+                );
+        }
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(final String prefix) {
+        if (prefix.endsWith(" ")) {
+            this.prefix = prefix;
+        } else {
+            this.prefix = prefix + ' ';
+        }
+    }
+
+    public String getSpaceKey() {
+        return spaceKey;
+    }
+
+    public void setSpaceKey(final String spaceKey) {
+        this.spaceKey = spaceKey;
+    }
+
+    public String getSwaggerSchema() {
+        return swaggerSchema;
+    }
+
+    public void setSwaggerSchema(final String swaggerSchema) {
+        this.swaggerSchema = swaggerSchema;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 
 }
