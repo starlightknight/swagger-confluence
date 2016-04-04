@@ -15,12 +15,12 @@ cache:
      - .gradle/wrapper
      - .gradle/caches
 
-job_build_develop:
+job_build:
   stage: build
   script:
     - ./gradlew clean build shadowJar
-  only:
-    - develop
+  except:
+    - maseter
   tags:
     - docker
 
@@ -39,6 +39,16 @@ job_analyze_develop:
     - ./gradlew jacocoTestReport sonarqube -Dsonar.issuesReport.console.enable=true -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref=$CI_BUILD_REF_NAME
   only:
     - develop
+  tags:
+    - docker
+
+job_analyze_pull:
+  stage: analyze
+  script:
+    - ./gradlew jacocoTestReport sonarqube -Dsonar.analysis.mode=preview -Dsonar.issuesReport.console.enable=true -Dsonar.gitlab.commit_sha=$CI_BUILD_REF -Dsonar.gitlab.ref=$CI_BUILD_REF_NAME
+  except:
+    - develop
+    - master
   tags:
     - docker
 
