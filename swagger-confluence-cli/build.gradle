@@ -38,7 +38,7 @@ bintray {
     publications = ['myPublication']
     pkg {
         version {
-            name = version
+            name = project.version
         }
         repo = "$System.env.BINTRAY_REPO"
         name = 'swagger-confluence-cli'
