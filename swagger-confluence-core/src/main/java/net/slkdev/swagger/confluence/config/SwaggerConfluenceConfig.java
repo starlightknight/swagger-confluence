@@ -17,6 +17,7 @@ package net.slkdev.swagger.confluence.config;
 
 import net.slkdev.swagger.confluence.constants.PaginationMode;
 import net.slkdev.swagger.confluence.exception.SwaggerConfluenceConfigurationException;
+import org.apache.commons.lang3.StringUtils;
 
 public class SwaggerConfluenceConfig {
 
@@ -110,8 +111,10 @@ public class SwaggerConfluenceConfig {
     public void setPrefix(final String prefix) {
         if (prefix.endsWith(" ")) {
             this.prefix = prefix;
-        } else {
+        } else if (StringUtils.isNotEmpty(prefix)){
             this.prefix = prefix + ' ';
+        } else {
+            this.prefix = prefix;
         }
     }
 
