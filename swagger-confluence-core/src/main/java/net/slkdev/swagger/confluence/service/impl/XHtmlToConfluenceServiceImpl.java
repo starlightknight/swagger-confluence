@@ -31,6 +31,7 @@ import net.slkdev.swagger.confluence.model.ConfluenceLinkBuilder;
 import net.slkdev.swagger.confluence.model.ConfluencePage;
 import net.slkdev.swagger.confluence.model.ConfluencePageBuilder;
 import net.slkdev.swagger.confluence.service.XHtmlToConfluenceService;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -408,7 +409,12 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             confluenceTitleBuilder.append(". ");
         }
 
-        confluenceTitleBuilder.append(swaggerConfluenceConfig.getPrefix());
+        final String prefix = swaggerConfluenceConfig.getPrefix();
+
+        if(StringUtils.isNotEmpty(prefix)) {
+            confluenceTitleBuilder.append(swaggerConfluenceConfig.getPrefix());
+        }
+
         confluenceTitleBuilder.append(originalTitle);
 
         return confluenceTitleBuilder.toString();
