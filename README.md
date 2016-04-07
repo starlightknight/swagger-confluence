@@ -1,5 +1,9 @@
 # Swagger Confluence
 
+[ ![Build Status](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence/badges/develop/build.svg) ](https://cloud.slkdev.net/gitlab/starlightknight/swagger-confluence/builds)
+[ ![Quality Gate](https://cloud.slkdev.net/sonar/api/badges/gate?key=30)](https://cloud.slkdev.net/sonar/overview?id=30)
+[ ![Download](https://api.bintray.com/packages/starlightknight/maven/swagger-confluence-cli-all/images/download.svg) ](https://bintray.com/starlightknight/maven/swagger-confluence-cli-all/_latestVersion)
+
 ## Overview
 
 The primary goal of this project is to simplify publishing Swagger API documentation to an Atlassian Confluence server. Ideally, this plugin would be activated on the build of a schema jar, which would contain your contract-first Swagger JSON or YAML file
@@ -79,7 +83,9 @@ A special thanks for the following projects, who make this project possible:
 
 * [Swagger2Markup](https://github.com/Swagger2Markup/swagger2markup)
 * [AsciiDoctorJ](https://github.com/asciidoctor/asciidoctorj)
+* [JSoup](http://jsoup.org/)
 * [Confluence REST API](https://developer.atlassian.com/confdev/confluence-rest-api)
+
 
 
 

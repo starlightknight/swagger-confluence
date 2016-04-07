@@ -31,6 +31,7 @@ import net.slkdev.swagger.confluence.model.ConfluenceLinkBuilder;
 import net.slkdev.swagger.confluence.model.ConfluencePage;
 import net.slkdev.swagger.confluence.model.ConfluencePageBuilder;
 import net.slkdev.swagger.confluence.service.XHtmlToConfluenceService;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -322,7 +323,13 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         for (final Element innerTocElement : innerTocElements) {
             // If we're in individual page mode, then we collect the inner ToCs
             if (individualPages) {
-                innerTocXHtmlList.add(innerTocElement.html());
+                final StringBuilder tocHtml = new StringBuilder();
+                tocHtml.append("<div id=\"toc\" class=\"toc\">");
+                tocHtml.append("<h4 id=\"toctitle\">Table of Contents</h4>");
+                tocHtml.append("<div><ul class=\"sectlevel1\">");
+                tocHtml.append(innerTocElement.html());
+                tocHtml.append("</ul></div></div>");
+                innerTocXHtmlList.add(tocHtml.toString());
             }
             // If we're in category page mode, then we strip out the inner table of contents.
             else {
@@ -408,7 +415,12 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             confluenceTitleBuilder.append(". ");
         }
 
-        confluenceTitleBuilder.append(swaggerConfluenceConfig.getPrefix());
+        final String prefix = swaggerConfluenceConfig.getPrefix();
+
+        if(StringUtils.isNotEmpty(prefix)) {
+            confluenceTitleBuilder.append(swaggerConfluenceConfig.getPrefix());
+        }
+
         confluenceTitleBuilder.append(originalTitle);
 
         return confluenceTitleBuilder.toString();
@@ -491,7 +503,7 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         return headers;
     }
 
-    private Integer getPageIdFromResponse(final HttpEntity<String> responseEntity) {
+    private static Integer getPageIdFromResponse(final HttpEntity<String> responseEntity) {
         final String responseJson = responseEntity.getBody();
         final JSONParser jsonParser = new JSONParser(DEFAULT_PERMISSIVE_MODE);
 
@@ -691,6 +703,16 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         reformatXHtmlHeadings(document, "h3");
         reformatXHtmlHeadings(document, "#toctitle");
 
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        if(swaggerConfluenceConfig.getPaginationMode()==PaginationMode.SINGLE_PAGE){
+            if(swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage()) {
+                reformatXHtmlBreakAfterElements(document, "#toc");
+            }
+
+            reformatXHtmlBreakAfterElements(document, ".sect1");
+        }
+
         reformatXHtmlSpacing(document.select(".sect2"));
         reformatXHtmlSpacing(document.select(".sect3"));
 
@@ -705,6 +727,10 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             final String strongHeaderText = String.format("<strong>%s</strong>", text);
             element.html(strongHeaderText);
         }
+    }
+
+    private static void reformatXHtmlBreakAfterElements(final Document document, final String elements){
+        document.select(elements).after("<br />");
     }
 
     private static void reformatXHtmlSpacing(final Elements elements){

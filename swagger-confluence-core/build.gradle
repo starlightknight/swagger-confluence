@@ -55,6 +55,10 @@ publishing {
     publications {
         myPublication(MavenPublication) {
             from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
         }
     }
 }
