@@ -697,6 +697,13 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         reformatXHtmlHeadings(document, "h3");
         reformatXHtmlHeadings(document, "#toctitle");
 
+        final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
+
+        if(swaggerConfluenceConfig.getPaginationMode()==PaginationMode.SINGLE_PAGE &&
+                swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage()){
+            document.select("#toc").after("<br />");
+        }
+
         reformatXHtmlSpacing(document.select(".sect2"));
         reformatXHtmlSpacing(document.select(".sect3"));
 
