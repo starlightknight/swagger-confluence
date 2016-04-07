@@ -80,6 +80,15 @@ subprojects {
         gradleVersion = 2.12
     }
 
+    task sourceJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourceJar
+    }
+
     test {
         jacoco {
             enabled true

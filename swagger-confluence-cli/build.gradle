@@ -66,10 +66,18 @@ publishing {
         myPublication(MavenPublication) {
             from components.java
             artifactId = 'swagger-confluence-cli'
+
+            artifact sourceJar {
+                classifier "sources"
+            }
         }
 		myShadowPublication(MavenPublication) {
 			from components.shadow
             artifactId = 'swagger-confluence-cli-all'
+
+            artifact sourceJar {
+                classifier "sources"
+            }
 		}
 	}
 }
