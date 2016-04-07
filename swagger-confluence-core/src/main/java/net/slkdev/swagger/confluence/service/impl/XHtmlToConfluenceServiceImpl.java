@@ -323,7 +323,13 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
         for (final Element innerTocElement : innerTocElements) {
             // If we're in individual page mode, then we collect the inner ToCs
             if (individualPages) {
-                innerTocXHtmlList.add(innerTocElement.html());
+                final StringBuilder tocHtml = new StringBuilder();
+                tocHtml.append("<div id=\"toc\" class=\"toc\">");
+                tocHtml.append("<h4 id=\"toctitle\">Table of Contents</h4>");
+                tocHtml.append("<div><ul class=\"sectlevel1\">");
+                tocHtml.append(innerTocElement.html());
+                tocHtml.append("</ul></div></div>");
+                innerTocXHtmlList.add(tocHtml.toString());
             }
             // If we're in category page mode, then we strip out the inner table of contents.
             else {
