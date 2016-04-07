@@ -37,7 +37,7 @@ allprojects {
 subprojects {
     group 'net.slkdev.swagger.confluence'
 
-    version '2.1'
+    version '2.2'
 
     if (project.hasProperty("release")) {
         version += '-RELEASE'
