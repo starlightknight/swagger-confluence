@@ -699,9 +699,12 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
 
         final SwaggerConfluenceConfig swaggerConfluenceConfig = SWAGGER_CONFLUENCE_CONFIG.get();
 
-        if(swaggerConfluenceConfig.getPaginationMode()==PaginationMode.SINGLE_PAGE &&
-                swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage()){
-            document.select("#toc").after("<br />");
+        if(swaggerConfluenceConfig.getPaginationMode()==PaginationMode.SINGLE_PAGE){
+            if(swaggerConfluenceConfig.isIncludeTableOfContentsOnSinglePage()) {
+                reformatXHtmlBreakAfterElements(document, "#toc");
+            }
+
+            reformatXHtmlBreakAfterElements(document, ".sect1");
         }
 
         reformatXHtmlSpacing(document.select(".sect2"));
@@ -718,6 +721,10 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
             final String strongHeaderText = String.format("<strong>%s</strong>", text);
             element.html(strongHeaderText);
         }
+    }
+
+    private static void reformatXHtmlBreakAfterElements(final Document document, final String elements){
+        document.select(elements).after("<br />");
     }
 
     private static void reformatXHtmlSpacing(final Elements elements){
