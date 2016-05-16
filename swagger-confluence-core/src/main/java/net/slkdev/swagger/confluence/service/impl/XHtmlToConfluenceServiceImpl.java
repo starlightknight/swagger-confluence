@@ -497,8 +497,8 @@ public class XHtmlToConfluenceServiceImpl implements XHtmlToConfluenceService {
     private static HttpHeaders buildHttpHeaders(final String confluenceAuthentication) {
         final HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", String.format("Basic %s", confluenceAuthentication));
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
         return headers;
     }
