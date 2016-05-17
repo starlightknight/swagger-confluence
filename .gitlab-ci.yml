@@ -20,7 +20,7 @@ job_build:
   script:
     - ./gradlew clean build shadowJar
   except:
-    - maseter
+    - master
   tags:
     - docker
 
