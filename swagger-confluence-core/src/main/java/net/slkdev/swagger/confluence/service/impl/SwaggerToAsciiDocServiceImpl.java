@@ -15,11 +15,13 @@
  */
 package net.slkdev.swagger.confluence.service.impl;
 
-import io.github.robwin.markup.builder.MarkupLanguage;
-import io.github.robwin.swagger2markup.Swagger2MarkupConverter;
+import io.github.swagger2markup.*;
+import io.github.swagger2markup.builder.Swagger2MarkupConfigBuilder;
+import io.github.swagger2markup.markup.builder.MarkupLanguage;
 import net.slkdev.swagger.confluence.exception.SwaggerConfluenceConfigurationException;
 import net.slkdev.swagger.confluence.exception.SwaggerConfluenceInternalSystemException;
 import net.slkdev.swagger.confluence.service.SwaggerToAsciiDocService;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class SwaggerToAsciiDocServiceImpl implements SwaggerToAsciiDocService {
 
@@ -45,13 +48,24 @@ public class SwaggerToAsciiDocServiceImpl implements SwaggerToAsciiDocService {
             throw new SwaggerConfluenceConfigurationException("Error Locating Swagger Schema", e);
         }
 
+
         final String swaggerAsciiDoc;
 
         try {
-            swaggerAsciiDoc = Swagger2MarkupConverter.from(swaggerSchemaFile.getAbsolutePath())
+            final Swagger2MarkupConfig config = new Swagger2MarkupConfigBuilder()
                     .withMarkupLanguage(MarkupLanguage.ASCIIDOC)
+                    .withOutputLanguage(Language.EN)
+                    .withPathsGroupedBy(GroupBy.AS_IS)
+                    .withOperationOrdering(OrderBy.AS_IS)
+                    .build();
+
+            final String swaggerSchema = FileUtils.readFileToString(swaggerSchemaFile, StandardCharsets.UTF_8);
+
+            swaggerAsciiDoc = Swagger2MarkupConverter.from(swaggerSchema)
+                    .withConfig(config)
                     .build()
-                    .asString();
+                    .toString();
+
         } catch (IOException e) {
             throw new SwaggerConfluenceInternalSystemException(
                     "Error Converting Swagger Schema to AsciiDoc", e);
