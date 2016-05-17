@@ -57,7 +57,7 @@ public class XHtmlToConfluenceServiceImplTest {
 
 	private static final String POST_RESPONSE = "{\"id\":\"1\"}";
 
-    private static final List<Integer> CATEGORY_INDEXES = Arrays.asList(1, 6, 25);
+    private static final List<Integer> CATEGORY_INDEXES = Arrays.asList(1, 6, 25, 31);
 
 	@Mock
 	private RestTemplate restTemplate;
@@ -158,7 +158,7 @@ public class XHtmlToConfluenceServiceImplTest {
 						"/swagger-petstore-xhtml-example.html")
 		);
 
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 5; i++) {
 			when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
 					any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
 			when(responseEntity.getBody()).thenReturn(GET_RESPONSE_NOT_FOUND);
@@ -171,12 +171,12 @@ public class XHtmlToConfluenceServiceImplTest {
 
 		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 
-		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.GET),
+		verify(restTemplate, times(5)).exchange(any(URI.class), eq(HttpMethod.GET),
 				any(RequestEntity.class), eq(String.class));
-		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.POST),
+		verify(restTemplate, times(5)).exchange(any(URI.class), eq(HttpMethod.POST),
 				httpEntityCaptor.capture(), eq(String.class));
 
-		final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+		final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getAllValues().get(3);
 
 		final String expectedPostBody = IOUtils.readFull(
 				AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
@@ -201,7 +201,7 @@ public class XHtmlToConfluenceServiceImplTest {
 
 		final ResponseEntity<String> postResponseEntity = new ResponseEntity<>(POST_RESPONSE, HttpStatus.OK);
 
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 5; i++) {
 			when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
 					any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
 			when(responseEntity.getBody()).thenReturn(GET_RESPONSE_FOUND);
@@ -213,12 +213,12 @@ public class XHtmlToConfluenceServiceImplTest {
 
 		xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 
-		verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.GET),
+		verify(restTemplate, times(5)).exchange(any(URI.class), eq(HttpMethod.GET),
 				any(RequestEntity.class), eq(String.class));
-        verify(restTemplate, times(4)).exchange(any(URI.class), eq(HttpMethod.PUT),
+        verify(restTemplate, times(5)).exchange(any(URI.class), eq(HttpMethod.PUT),
                 httpEntityCaptor.capture(), eq(String.class));
 
-        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getAllValues().get(3);
 
         final String expectedPostBody = IOUtils.readFull(
                 AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
@@ -254,12 +254,12 @@ public class XHtmlToConfluenceServiceImplTest {
 
         xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 
-        verify(restTemplate, times(31)).exchange(any(URI.class), eq(HttpMethod.GET),
+        verify(restTemplate, times(34)).exchange(any(URI.class), eq(HttpMethod.GET),
                 any(RequestEntity.class), eq(String.class));
-        verify(restTemplate, times(31)).exchange(any(URI.class), eq(HttpMethod.POST),
+        verify(restTemplate, times(34)).exchange(any(URI.class), eq(HttpMethod.POST),
                 httpEntityCaptor.capture(), eq(String.class));
 
-        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getAllValues().get(30);
 
         final String expectedPostBody = IOUtils.readFull(
                 AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(
@@ -289,7 +289,7 @@ public class XHtmlToConfluenceServiceImplTest {
         when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET),
                 any(RequestEntity.class), eq(String.class))).thenReturn(responseEntity);
 
-        for(int i = 0; i < 31; i++) {
+        for(int i = 0; i < 34; i++) {
             if(i > 0) {
                 returnJson.add(GET_RESPONSE_FOUND);
             }
@@ -315,12 +315,12 @@ public class XHtmlToConfluenceServiceImplTest {
 
         xHtmlToConfluenceService.postXHtmlToConfluence(swaggerConfluenceConfig, xhtml);
 
-        verify(restTemplate, times(34)).exchange(any(URI.class), eq(HttpMethod.GET),
+        verify(restTemplate, times(38)).exchange(any(URI.class), eq(HttpMethod.GET),
                 any(RequestEntity.class), eq(String.class));
-        verify(restTemplate, times(31)).exchange(any(URI.class), eq(HttpMethod.PUT),
+        verify(restTemplate, times(34)).exchange(any(URI.class), eq(HttpMethod.PUT),
                 httpEntityCaptor.capture(), eq(String.class));
 
-        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getValue();
+        final HttpEntity<String> capturedHttpEntity = httpEntityCaptor.getAllValues().get(30);
 
         final String expectedPostBody = IOUtils.readFull(
                 AsciiDocToXHtmlServiceImplTest.class.getResourceAsStream(

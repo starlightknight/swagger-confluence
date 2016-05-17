@@ -11,24 +11,24 @@
 </li>
 <li><a href="#_paths">Paths</a>
 <ul class="sectlevel2">
-<li><a href="#_update_an_existing_pet">Update an existing pet</a></li>
-<li><a href="#_add_a_new_pet_to_the_store">Add a new pet to the store</a></li>
-<li><a href="#_finds_pets_by_status">Finds Pets by status</a></li>
-<li><a href="#_finds_pets_by_tags">Finds Pets by tags</a></li>
-<li><a href="#_updates_a_pet_in_the_store_with_form_data">Updates a pet in the store with form data</a></li>
-<li><a href="#_find_pet_by_id">Find pet by ID</a></li>
-<li><a href="#_deletes_a_pet">Deletes a pet</a></li>
-<li><a href="#_place_an_order_for_a_pet">Place an order for a pet</a></li>
-<li><a href="#_find_purchase_order_by_id">Find purchase order by ID</a></li>
-<li><a href="#_delete_purchase_order_by_id">Delete purchase order by ID</a></li>
-<li><a href="#_create_user">Create user</a></li>
-<li><a href="#_creates_list_of_users_with_given_input_array">Creates list of users with given input array</a></li>
-<li><a href="#_creates_list_of_users_with_given_input_array_2">Creates list of users with given input array</a></li>
-<li><a href="#_logs_user_into_the_system">Logs user into the system</a></li>
-<li><a href="#_logs_out_current_logged_in_user_session">Logs out current logged in user session</a></li>
-<li><a href="#_updated_user">Updated user</a></li>
-<li><a href="#_get_user_by_user_name">Get user by user name</a></li>
-<li><a href="#_delete_user">Delete user</a></li>
+<li><a href="#_addpet">Add a new pet to the store</a></li>
+<li><a href="#_updatepet">Update an existing pet</a></li>
+<li><a href="#_findpetsbystatus">Finds Pets by status</a></li>
+<li><a href="#_findpetsbytags">Finds Pets by tags</a></li>
+<li><a href="#_updatepetwithform">Updates a pet in the store with form data</a></li>
+<li><a href="#_deletepet">Deletes a pet</a></li>
+<li><a href="#_getpetbyid">Find pet by ID</a></li>
+<li><a href="#_placeorder">Place an order for a pet</a></li>
+<li><a href="#_deleteorder">Delete purchase order by ID</a></li>
+<li><a href="#_getorderbyid">Find purchase order by ID</a></li>
+<li><a href="#_createuser">Create user</a></li>
+<li><a href="#_createuserswitharrayinput">Creates list of users with given input array</a></li>
+<li><a href="#_createuserswithlistinput">Creates list of users with given input array</a></li>
+<li><a href="#_loginuser">Logs user into the system</a></li>
+<li><a href="#_logoutuser">Logs out current logged in user session</a></li>
+<li><a href="#_updateuser">Updated user</a></li>
+<li><a href="#_deleteuser">Delete user</a></li>
+<li><a href="#_getuserbyname">Get user by user name</a></li>
 </ul>
 </li>
 <li><a href="#_definitions">Definitions</a>
@@ -40,6 +40,12 @@
 <li><a href="#_user">User</a></li>
 </ul>
 </li>
+<li><a href="#_securityscheme">Security</a>
+<ul class="sectlevel2">
+<li><a href="#_api_key">api_key</a></li>
+<li><a href="#_petstore_auth">petstore_auth</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sect1">
@@ -49,7 +55,7 @@
 <p>This is a sample server Petstore server.</p>
 </div>
 <div class="paragraph">
-<p>[Learn about Swagger](<a href="http://swagger.io" class="bare">http://swagger.io</a>) or join the IRC channel <code>#swagger</code> on irc.freenode.net.</p>
+<p><a href="http://swagger.io">Learn about Swagger</a> or join the IRC channel <code>#swagger</code> on irc.freenode.net.</p>
 </div>
 <div class="paragraph">
 <p>For this sample, you can use the api key <code>special-key</code> to test the authorization filters</p>
@@ -57,30 +63,29 @@
 <div class="sect2">
 <h3 id="_version_information">Version information</h3>
 <div class="paragraph">
-<p>Version: 1.0.0</p>
+<p><em>Version</em> : 1.0.0</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_contact_information">Contact information</h3>
 <div class="paragraph">
-<p>Contact: <a href="mailto:apiteam@swagger.io">apiteam@swagger.io</a></p>
+<p><em>Contact</em> : <a href="mailto:apiteam@swagger.io">apiteam@swagger.io</a></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_license_information">License information</h3>
 <div class="paragraph">
-<p>License: Apache 2.0</p>
-</div>
-<div class="paragraph">
-<p>Terms of service: <a href="http://helloreverb.com/terms/" class="bare">http://helloreverb.com/terms/</a></p>
+<p><em>License</em> : Apache 2.0<br/>
+<em>License URL</em> : <a href="http://www.apache.org/licenses/LICENSE-2.0.html" class="bare">http://www.apache.org/licenses/LICENSE-2.0.html</a><br/>
+<em>Terms of service</em> : <a href="http://helloreverb.com/terms/" class="bare">http://helloreverb.com/terms/</a></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_uri_scheme">URI scheme</h3>
 <div class="paragraph">
-<p>Host: petstore.swagger.io
-BasePath: /v2
-Schemes: HTTP</p>
+<p><em>Host</em> : petstore.swagger.io<br/>
+<em>BasePath</em> : /v2<br/>
+<em>Schemes</em> : HTTP</p>
 </div>
 </div>
 </div>
@@ -89,41 +94,39 @@ Schemes: HTTP</p>
 <h2 id="_paths">Paths</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_update_an_existing_pet">Update an existing pet</h3>
-<div class="listingblock">
+<h3 id="_addpet">Add a new pet to the store</h3>
+<div class="literalblock">
 <div class="content">
-<pre>PUT /pets</pre>
+<pre>POST /pets</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pet object that needs to be added to the store</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Pet object that needs to be added to the store</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -132,32 +135,22 @@ Schemes: HTTP</p>
 <h4 id="_responses">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid ID supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pet not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">405</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Validation exception</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>405</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid input</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -167,10 +160,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -180,10 +173,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -198,43 +191,65 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_add_a_new_pet_to_the_store">Add a new pet to the store</h3>
-<div class="listingblock">
+<h3 id="_updatepet">Update an existing pet</h3>
+<div class="literalblock">
 <div class="content">
-<pre>POST /pets</pre>
+<pre>PUT /pets</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_2">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pet object that needs to be added to the store</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Pet object that needs to be added to the store</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -243,22 +258,32 @@ Schemes: HTTP</p>
 <h4 id="_responses_2">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">405</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid input</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid ID supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Pet not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>405</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Validation exception</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -268,10 +293,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -281,10 +306,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -299,10 +324,34 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_2">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_finds_pets_by_status">Finds Pets by status</h3>
-<div class="listingblock">
+<h3 id="_findpetsbystatus">Finds Pets by status</h3>
+<div class="literalblock">
 <div class="content">
 <pre>GET /pets/findByStatus</pre>
 </div>
@@ -317,31 +366,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_3">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QueryParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status values that need to be considered for filter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">multi string array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>status</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Status values that need to be considered for filter</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array(multi)</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -350,27 +397,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_3">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_pet">Pet</a> array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_pet">Pet</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid status value</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid status value</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -380,10 +427,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -398,10 +445,34 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_3">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_finds_pets_by_tags">Finds Pets by tags</h3>
-<div class="listingblock">
+<h3 id="_findpetsbytags">Finds Pets by tags</h3>
+<div class="literalblock">
 <div class="content">
 <pre>GET /pets/findByTags</pre>
 </div>
@@ -416,31 +487,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_4">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QueryParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tags</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tags to filter by</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">multi string array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>tags</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Tags to filter by</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array(multi)</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -449,27 +518,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_4">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_pet">Pet</a> array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_pet">Pet</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid tag value</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid tag value</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -479,10 +548,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -497,10 +566,34 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_4">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_updates_a_pet_in_the_store_with_form_data">Updates a pet in the store with form data</h3>
-<div class="listingblock">
+<h3 id="_updatepetwithform">Updates a pet in the store with form data</h3>
+<div class="literalblock">
 <div class="content">
 <pre>POST /pets/{petId}</pre>
 </div>
@@ -509,47 +602,45 @@ Schemes: HTTP</p>
 <h4 id="_parameters_5">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">petId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID of pet that needs to be updated</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>petId</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">ID of pet that needs to be updated</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FormDataParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Updated name of the pet</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>FormData</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Updated name of the pet</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">FormDataParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Updated status of the pet</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>FormData</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>status</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Updated status of the pet</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -558,22 +649,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_5">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">405</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid input</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>405</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid input</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -583,7 +674,7 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/x-www-form-urlencoded</p>
+<p><code>application/x-www-form-urlencoded</code></p>
 </li>
 </ul>
 </div>
@@ -593,10 +684,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -611,49 +702,73 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_5">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_find_pet_by_id">Find pet by ID</h3>
-<div class="listingblock">
+<h3 id="_deletepet">Deletes a pet</h3>
+<div class="literalblock">
 <div class="content">
-<pre>GET /pets/{petId}</pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_description_3">Description</h4>
-<div class="paragraph">
-<p>Returns a pet when ID &lt; 10.  ID &gt; 10 or nonintegers will simulate API error conditions</p>
+<pre>DELETE /pets/{petId}</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_6">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">petId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID of pet that needs to be fetched</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Header</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>api_key</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>petId</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Pet id to delete</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -662,32 +777,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_6">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid ID supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pet not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid pet value</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -697,10 +802,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -715,51 +820,71 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_6">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_deletes_a_pet">Deletes a pet</h3>
-<div class="listingblock">
+<h3 id="_getpetbyid">Find pet by ID</h3>
+<div class="literalblock">
 <div class="content">
-<pre>DELETE /pets/{petId}</pre>
+<pre>GET /pets/{petId}</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_description_3">Description</h4>
+<div class="paragraph">
+<p>Returns a pet when ID &lt; 10. ID &gt; 10 or nonintegers will simulate API error conditions</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_7">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">HeaderParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">api_key</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">petId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Pet id to delete</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>petId</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">ID of pet that needs to be fetched</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -768,22 +893,32 @@ Schemes: HTTP</p>
 <h4 id="_responses_7">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid pet value</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_pet">Pet</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid ID supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Pet not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -793,10 +928,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -811,10 +946,39 @@ Schemes: HTTP</p>
 </ul>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_security_7">Security</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 20%;"/>
+<col style="width: 65%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>apiKey</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_api_key">api_key</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>oauth2</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong><a href="#_petstore_auth">petstore_auth</a></strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets,read_pets</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_place_an_order_for_a_pet">Place an order for a pet</h3>
-<div class="listingblock">
+<h3 id="_placeorder">Place an order for a pet</h3>
+<div class="literalblock">
 <div class="content">
 <pre>POST /stores/order</pre>
 </div>
@@ -823,31 +987,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_8">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">order placed for purchasing the pet</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_order">Order</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">order placed for purchasing the pet</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_order">Order</a></p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -856,27 +1018,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_8">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_order">Order</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_order">Order</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid Order</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid Order</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -886,10 +1048,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -906,47 +1068,45 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_find_purchase_order_by_id">Find purchase order by ID</h3>
-<div class="listingblock">
+<h3 id="_deleteorder">Delete purchase order by ID</h3>
+<div class="literalblock">
 <div class="content">
-<pre>GET /stores/order/{orderId}</pre>
+<pre>DELETE /stores/order/{orderId}</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_description_4">Description</h4>
 <div class="paragraph">
-<p>For valid response try integer IDs with value &#8656; 5 or &gt; 10. Other values will generated exceptions</p>
+<p>For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_9">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID of pet that needs to be fetched</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderId</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">ID of the order that needs to be deleted</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -955,32 +1115,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_9">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_order">Order</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid ID supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid ID supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Order not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -990,10 +1145,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1010,47 +1165,45 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_delete_purchase_order_by_id">Delete purchase order by ID</h3>
-<div class="listingblock">
+<h3 id="_getorderbyid">Find purchase order by ID</h3>
+<div class="literalblock">
 <div class="content">
-<pre>DELETE /stores/order/{orderId}</pre>
+<pre>GET /stores/order/{orderId}</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_description_5">Description</h4>
 <div class="paragraph">
-<p>For valid response try integer IDs with value &lt; 1000. Anything above 1000 or nonintegers will generate API errors</p>
+<p>For valid response try integer IDs with value &lt;= 5 or &gt; 10. Other values will generated exceptions</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_10">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">orderId</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID of the order that needs to be deleted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderId</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">ID of pet that needs to be fetched</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1059,27 +1212,32 @@ Schemes: HTTP</p>
 <h4 id="_responses_10">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid ID supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_order">Order</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid ID supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Order not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1089,10 +1247,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1109,8 +1267,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_user">Create user</h3>
-<div class="listingblock">
+<h3 id="_createuser">Create user</h3>
+<div class="literalblock">
 <div class="content">
 <pre>POST /users</pre>
 </div>
@@ -1125,31 +1283,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_11">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Created user object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_user">User</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Created user object</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_user">User</a></p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1158,22 +1314,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_11">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">default</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>default</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1183,10 +1339,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1203,8 +1359,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creates_list_of_users_with_given_input_array">Creates list of users with given input array</h3>
-<div class="listingblock">
+<h3 id="_createuserswitharrayinput">Creates list of users with given input array</h3>
+<div class="literalblock">
 <div class="content">
 <pre>POST /users/createWithArray</pre>
 </div>
@@ -1213,31 +1369,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_12">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of user object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_user">User</a> array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">List of user object</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_user">User</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1246,22 +1400,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_12">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">default</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>default</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1271,10 +1425,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1291,8 +1445,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creates_list_of_users_with_given_input_array_2">Creates list of users with given input array</h3>
-<div class="listingblock">
+<h3 id="_createuserswithlistinput">Creates list of users with given input array</h3>
+<div class="literalblock">
 <div class="content">
 <pre>POST /users/createWithList</pre>
 </div>
@@ -1301,31 +1455,29 @@ Schemes: HTTP</p>
 <h4 id="_parameters_13">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of user object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_user">User</a> array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">List of user object</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_user">User</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1334,22 +1486,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_13">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">default</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>default</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1359,10 +1511,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1379,8 +1531,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_logs_user_into_the_system">Logs user into the system</h3>
-<div class="listingblock">
+<h3 id="_loginuser">Logs user into the system</h3>
+<div class="literalblock">
 <div class="content">
 <pre>GET /users/login</pre>
 </div>
@@ -1389,39 +1541,37 @@ Schemes: HTTP</p>
 <h4 id="_parameters_14">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QueryParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The user name for login</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>password</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">The password for login in clear text</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QueryParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password for login in clear text</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>username</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">The user name for login</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1430,27 +1580,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_14">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid username/password supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid username/password supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1460,10 +1610,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1480,8 +1630,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_logs_out_current_logged_in_user_session">Logs out current logged in user session</h3>
-<div class="listingblock">
+<h3 id="_logoutuser">Logs out current logged in user session</h3>
+<div class="literalblock">
 <div class="content">
 <pre>GET /users/logout</pre>
 </div>
@@ -1490,22 +1640,22 @@ Schemes: HTTP</p>
 <h4 id="_responses_15">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">default</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>default</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1515,10 +1665,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1535,8 +1685,8 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_updated_user">Updated user</h3>
-<div class="listingblock">
+<h3 id="_updateuser">Updated user</h3>
+<div class="literalblock">
 <div class="content">
 <pre>PUT /users/{username}</pre>
 </div>
@@ -1551,39 +1701,37 @@ Schemes: HTTP</p>
 <h4 id="_parameters_15">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name that need to be deleted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>username</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">name that need to be deleted</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BodyParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Updated user object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_user">User</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Updated user object</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_user">User</a></p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1592,27 +1740,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_16">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid user supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid user supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">User not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1622,10 +1770,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1642,41 +1790,45 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_get_user_by_user_name">Get user by user name</h3>
-<div class="listingblock">
+<h3 id="_deleteuser">Delete user</h3>
+<div class="literalblock">
 <div class="content">
-<pre>GET /users/{username}</pre>
+<pre>DELETE /users/{username}</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_description_8">Description</h4>
+<div class="paragraph">
+<p>This can only be done by the logged in user.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_16">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name that needs to be fetched. Use user1 for testing.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>username</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">The name that needs to be deleted</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1685,32 +1837,27 @@ Schemes: HTTP</p>
 <h4 id="_responses_17">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">successful operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_user">User</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid username supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid username supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">User not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1720,10 +1867,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1740,47 +1887,39 @@ Schemes: HTTP</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_delete_user">Delete user</h3>
-<div class="listingblock">
+<h3 id="_getuserbyname">Get user by user name</h3>
+<div class="literalblock">
 <div class="content">
-<pre>DELETE /users/{username}</pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_description_8">Description</h4>
-<div class="paragraph">
-<p>This can only be done by the logged in user.</p>
+<pre>GET /users/{username}</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_parameters_17">Parameters</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.6666%;"/>
-<col style="width: 16.667%;"/>
+<col style="width: 5%;"/>
+<col style="width: 15%;"/>
+<col style="width: 50%;"/>
+<col style="width: 20%;"/>
+<col style="width: 10%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Type</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+<th class="tableblock halign-left valign-middle">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PathParameter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name that needs to be deleted</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Path</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>username</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">The name that needs to be fetched. Use user1 for testing.</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"></td>
 </tr>
 </tbody>
 </table>
@@ -1789,27 +1928,32 @@ Schemes: HTTP</p>
 <h4 id="_responses_18">Responses</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3333%;"/>
-<col style="width: 33.3334%;"/>
+<col style="width: 5%;"/>
+<col style="width: 75%;"/>
+<col style="width: 20%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">HTTP Code</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Schema</th>
+<th class="tableblock halign-left valign-middle">HTTP Code</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Invalid username supplied</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">successful operation</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_user">User</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User not found</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No Content</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Invalid username supplied</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">User not found</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">No Content</p></td>
 </tr>
 </tbody>
 </table>
@@ -1819,10 +1963,10 @@ Schemes: HTTP</p>
 <div class="ulist">
 <ul>
 <li>
-<p>application/json</p>
+<p><code>application/json</code></p>
 </li>
 <li>
-<p>application/xml</p>
+<p><code>application/xml</code></p>
 </li>
 </ul>
 </div>
@@ -1847,35 +1991,29 @@ Schemes: HTTP</p>
 <h3 id="_category">Category</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
+<col style="width: 16.6666%;"/>
+<col style="width: 61.1111%;"/>
+<col style="width: 22.2223%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
@@ -1884,63 +2022,53 @@ Schemes: HTTP</p>
 <h3 id="_order">Order</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
+<col style="width: 16.6666%;"/>
+<col style="width: 61.1111%;"/>
+<col style="width: 22.2223%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>complete</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">boolean</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">petId</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">quantity</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int32)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>petId</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">shipDate</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string (date-time)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>quantity</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int32)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Order Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>shipDate</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string(date-time)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">complete</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>status</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Order Status</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
@@ -1949,63 +2077,53 @@ Schemes: HTTP</p>
 <h3 id="_pet">Pet</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
+<col style="width: 16.6666%;"/>
+<col style="width: 61.1111%;"/>
+<col style="width: 22.2223%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>category</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_category">Category</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">category</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_category">Category</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Example</strong> : <code>"doggie"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">photoUrls</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>photoUrls</strong><br/>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tags</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#_tag">Tag</a> array</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>status</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">pet status in the store</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pet status in the store</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>tags</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_tag">Tag</a> &gt; array</p></td>
 </tr>
 </tbody>
 </table>
@@ -2014,35 +2132,29 @@ Schemes: HTTP</p>
 <h3 id="_tag">Tag</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
+<col style="width: 16.6666%;"/>
+<col style="width: 61.1111%;"/>
+<col style="width: 22.2223%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
@@ -2051,77 +2163,108 @@ Schemes: HTTP</p>
 <h3 id="_user">User</h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
-<col style="width: 20%;"/>
+<col style="width: 16.6666%;"/>
+<col style="width: 61.1111%;"/>
+<col style="width: 22.2223%;"/>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-<th class="tableblock halign-left valign-top">Schema</th>
-<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int64)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>email</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>firstName</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">firstName</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int64)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">lastName</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>lastName</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>password</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>phone</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">phone</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>userStatus</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">User Status</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer(int32)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">userStatus</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User Status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">integer (int32)</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>username</strong><br/>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_securityscheme">Security</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_api_key">api_key</h3>
+<div class="paragraph">
+<p><em>Type</em> : apiKey<br/>
+<em>Name</em> : api_key<br/>
+<em>In</em> : HEADER</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_petstore_auth">petstore_auth</h3>
+<div class="paragraph">
+<p><em>Type</em> : oauth2<br/>
+<em>Flow</em> : implicit<br/>
+<em>Token URL</em> : <a href="http://petstore.swagger.io/api/oauth/dialog" class="bare">http://petstore.swagger.io/api/oauth/dialog</a></p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 15%;"/>
+<col style="width: 85%;"/>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">write_pets</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">modify pets in your account</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">read_pets</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">read your pets</p></td>
 </tr>
 </tbody>
 </table>

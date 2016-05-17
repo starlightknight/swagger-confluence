@@ -36,7 +36,7 @@ bintray {
 dependencies {
     compile "org.slf4j:slf4j-api:$SLF4J_VERSION"
 
-    compile "io.github.robwin:swagger2markup:$SWAGGER2MARKUP_VERSION"
+    compile "io.github.swagger2markup:swagger2markup:$SWAGGER2MARKUP_VERSION"
     compile "org.springframework:spring-core:$SPRING_VERSION"
     compile "org.springframework:spring-web:$SPRING_VERSION"
     compile "org.asciidoctor:asciidoctorj:$ASCIIDOCTORJ_VERSION"
